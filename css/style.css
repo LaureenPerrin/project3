@@ -1,0 +1,28 @@
+/*Style généraux peut importe le device*/
+
+
+/*police utilisée*/
+
+@font-face
+{
+  font-family: "fontawesome_regular", arial, sans-serif;
+ src: url("/fonts/fontawesome-regular-webfont.woff") format("woff"),
+      url("/fonts/fontawesome-regular-webfont.ttf") format("truetype"),
+      url("/fonts/fontawesome-regular-webfont.eot") format("eot"),
+      url("/fonts/fontawesome-regular-webfont.svg") format("svg");
+
+    font-family: "glyphicons_halflings_regular", arial, sans-serif;
+ src: url("/fonts/glyphicons-halflings-regular.woff") format("woff"),
+      url("/fonts/glyphicons-halflings-regular.ttf") format("truetype"),
+      url("/fonts/glyphicons-halflings-regular.eot") format("eot"),
+      url("/fonts/glyphicons-halflings-regular.svg") format("svg");
+
+    font-style: normal;
+    font-weight: normal;
+}
+
+/*____________le corps de la page______________________________*/
+body
+{
+  font-family: "fontawesome_regular", arial, sans-serif;
+}
