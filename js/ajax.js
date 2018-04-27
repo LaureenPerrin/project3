@@ -15,7 +15,7 @@ function ajaxGet(url, callback) {
         console.error("Erreur réseau avec l'URL " + url);
     });
     req.send(null);
-}
+};
 
 // Exécute un appel AJAX POST
 // Prend en paramètres l'URL cible, la donnée à envoyer et la fonction callback appelée en cas de succès
@@ -41,4 +41,4 @@ function ajaxPost(url, data, callback, isJson) {
         data = JSON.stringify(data);
     }
     req.send(data);
-}
+};

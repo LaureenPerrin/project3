@@ -21,8 +21,53 @@
     font-weight: normal;
 }
 
-/*____________le corps de la page______________________________*/
 body
 {
   font-family: "fontawesome_regular", arial, sans-serif;
 }
+
+h1 {
+  font-weight: bold;
+  padding-top: 15px;
+}
+
+p {
+
+}
+
+/*____________le corps de la page______________________________*/
+
+  html, body, #main_wrapper {
+    height: 100%;
+    margin-top: -11px;    
+    padding: 0;
+  }
+
+/*____________________________header_________________________________________*/
+
+header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100px;
+  background-color: #00FFFF;
+}
+/*_______________________google map_________________________________________*/
+
+  #map {
+    height: 700px;
+    width: 100%;
+  }
+
+
+/*__________________________footer_________________________________________*/
+
+footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100px;
+  background-color: #00FFFF;
+  font-weight: bold;
+}
+  
