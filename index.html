@@ -32,30 +32,49 @@
 
     <!--lien mise en  forme css-->
     <link rel="stylesheet" type="text/css" href="css/reset.css"/>
-    <link rel="stylesheet" type="text/css" href="css/style.css"/>   
-                  
+    <link rel="stylesheet" type="text/css" href="css/style.css"/>
+
 </head>
 
 <body>
     <div id="main_wrapper">
 
-    <header>
-        <h1>Vélo'v</h1>
-    </header>
+        <header>
+            <h1>Vélo'v</h1>
+        </header>
 
-    <div id="slider_container"></div>
+        <div id="slider_container"></div>
 
-    <div id="map"></div>
+        <div id="map"></div>
 
-    <footer>
-        <p>2018 - Application web factice développée par Laureen Perrin pour l'établissement OpenClassRooms</p>
-    </footer>
+        <div id="info_stations">
+            <p id="title_info">Détail de la station</p>
 
-   </div>
+            <p id="name_station"></p>
+            <p id="address_station"></p>
+            <ul>
+                <li id="banking_station"></li>
+                <li id="status_station"></li>
+                <p id="infos">Elle dispose de :</p>
+                <li id="bike_stands_stations"></li>
+                <li id="available_bike_stands_station"></li>
+                <li id="available_bikes_station"></li>
+            </ul>
+            <input id="booking_button" type="button" value="Réserver">
+        </div>
+
+        <footer>
+            <p>2018 - Application web factice développée par Laureen Perrin pour l'établissement OpenClassRooms</p>
+        </footer>
+
+    </div>
+
     <script src="js/ajax.js"></script>
     <script src="js/javascript.js"></script>
-    </script>
+    <!---regroupement de marqueurs-->
+    <script src="js/markerclusterer.js"></script>
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDncDjLeVaq_Sqq2xDfsoYFFaMOq8ftIJk"></script>
+    <script  src = " https://cdn.jsdelivr.net/npm/signature_pad@2.3.2/dist/signature_pad.min.js "> </script>
 </body>
 
 </html>

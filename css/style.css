@@ -6,19 +6,19 @@
 @font-face
 {
   font-family: "fontawesome_regular", arial, sans-serif;
- src: url("/fonts/fontawesome-regular-webfont.woff") format("woff"),
-      url("/fonts/fontawesome-regular-webfont.ttf") format("truetype"),
-      url("/fonts/fontawesome-regular-webfont.eot") format("eot"),
-      url("/fonts/fontawesome-regular-webfont.svg") format("svg");
+  src: url("/fonts/fontawesome-regular-webfont.woff") format("woff"),
+  url("/fonts/fontawesome-regular-webfont.ttf") format("truetype"),
+  url("/fonts/fontawesome-regular-webfont.eot") format("eot"),
+  url("/fonts/fontawesome-regular-webfont.svg") format("svg");
 
-    font-family: "glyphicons_halflings_regular", arial, sans-serif;
- src: url("/fonts/glyphicons-halflings-regular.woff") format("woff"),
-      url("/fonts/glyphicons-halflings-regular.ttf") format("truetype"),
-      url("/fonts/glyphicons-halflings-regular.eot") format("eot"),
-      url("/fonts/glyphicons-halflings-regular.svg") format("svg");
+  font-family: "glyphicons_halflings_regular", arial, sans-serif;
+  src: url("/fonts/glyphicons-halflings-regular.woff") format("woff"),
+  url("/fonts/glyphicons-halflings-regular.ttf") format("truetype"),
+  url("/fonts/glyphicons-halflings-regular.eot") format("eot"),
+  url("/fonts/glyphicons-halflings-regular.svg") format("svg");
 
-    font-style: normal;
-    font-weight: normal;
+  font-style: normal;
+  font-weight: normal;
 }
 
 body
@@ -31,17 +31,14 @@ h1 {
   padding-top: 15px;
 }
 
-p {
-
-}
 
 /*____________le corps de la page______________________________*/
 
-  html, body, #main_wrapper {
-    height: 100%;
-    margin-top: -11px;    
-    padding: 0;
-  }
+html, body, #main_wrapper {
+  height: 100%;
+  margin-top: -11px;
+  padding: 0;
+}
 
 /*____________________________header_________________________________________*/
 
@@ -54,20 +51,86 @@ header {
 }
 /*_______________________google map_________________________________________*/
 
-  #map {
-    height: 700px;
-    width: 100%;
-  }
+#map {
+  height: 700px;
+  width: 100%;
+}
+
+/*_________________________div infos stations_______________________________________________*/
+
+#info_stations {
+ border:3px solid black;
+ height: 400px;
+ display: flex;
+ flex-direction: column;
+ justify-content: center;
+ align-items: center;
+ display:none;
+ margin-bottom: 15px;
+}
+
+#title_info {
+  text-decoration: underline;
+}
+
+#title_info, input {
+ font-weight: bold;
+}
+
+/*_______________________________________canvas__________________________________________*/
+
+#form_canvas {
+     height: 400px;
+    width: 300px;
+    border: 3px solid black;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: auto;
+    padding-bottom: 10px;
+    padding-top: 15px;
+}
+
+label#last_name {
+    margin: auto;
+}
+
+label#first_name {
+    margin: auto;
+}
+
+input#input_first_name {
+    border: 1px solid black;
+}
+
+input#input_last_name {
+    border: 1px solid black;
+}
+
+p#title_signature {
+    margin: 0px;
+}
+
+canvas {
+  height: 120px;
+  width: 250px;
+  border: 1px solid black;
+  margin-bottom: 60px;
+  display: flex;
+  margin: auto;
+}
+
+
 
 
 /*__________________________footer_________________________________________*/
 
 footer {
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
   height: 100px;
   background-color: #00FFFF;
   font-weight: bold;
+  margin-top: 15px;
 }
-  
