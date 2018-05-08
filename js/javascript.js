@@ -1,5 +1,5 @@
 "use strict"
-//__________________________________________________Déclaration des const utilisées dans le programme:
+//__________________________________________________Déclarations des const utilisées dans le programme:
 const mainWrapperElt = document.getElementById("main_wrapper");
 
 const headerElt = document.querySelector("header");
@@ -28,22 +28,12 @@ const footerElt = document.querySelector("footer");
 
 const bookingButtonElt = document.getElementById("booking_button");
 
+
 //________________________________________________________________Déclarations des class :
 
-//----------------------------------------------------------------class User :
-class User {
-  constructor(lastName, firstName, signature) {
-    this.lastName = lastName;
-    this.firstName = firstName;
-    this.signature = signature;
-  }
-};
-
-
-
-//----------------------------------------------------------------class Station :
+//-----------------------class Station pour les stations de vélo de Lyon :
 class Station {
-  constructor (name, address, banking, position, status, bikestands, availableBikeStands, availableBikes) {
+  constructor(name, address, banking, position, status, bikestands, availableBikeStands, availableBikes) {
     this.name = name;
     this.address = address,
     this.banking = banking;
@@ -53,20 +43,37 @@ class Station {
     this.availableBikeStands = availableBikeStands;
     this.availableBikes = availableBikes;
   }
-};
+}
 
-//--------------------------------------------------------------class Booking :
+
+//----------------------------------class User pour les utilisateurs :
+class User {
+  constructor(lastName, firstName, signature) {
+    this.lastName = lastName;
+    this.firstName = firstName;
+    this.signature = signature;
+  }
+}
+
+//const user = new User ("bibi", "baba", "bubu");
+//console.log(user);
+
+
+//---------------------class Booking  pour les réservation de vélo :
 
 class Booking {
-  constructor (status) {
+  constructor(status, User) {
     this.status = status;
+    this.user = User;
   }
-};
+}
 
 
-//__________________________________________Déclaration des fonctions utilisées :
 
-function createInput (id, type, value, parent) {
+//__________________________________________Déclarations des fonctions utilisées :
+
+//-----------------------------------fonction pour créer des inputs :
+function createInput(id, type, value, parent) {
   const inputCanvasElt = document.createElement("input");
   inputCanvasElt.id = id;
   inputCanvasElt.setAttribute("type", type);
@@ -75,95 +82,216 @@ function createInput (id, type, value, parent) {
   return inputCanvasElt;
 }
 
-//---------------------------------------------Déclaration d'un tableau des stations :
+
+
+//---------------------fonction pour déclarer un tableau des stations :
 function displayStations(stations) {
+    //Déclaration de l'objet station et du tablaeau stationsArray :
+    const stationsArray = stations.map(station => new Station(station.name, station.address, station.banking, station.position, station.status, station.bike_stands, station.available_bike_stands, station.available_bikes));
+    console.log(stationsArray);
+    return stationsArray;
+  }
 
-  const stationsArray = stations.map(station => new Station(station.name, station.address, station.banking, station.position, station.status, station.bike_stands, station.available_bike_stands, station.available_bikes));
-  console.log(stationsArray);
-  return stationsArray;
-};
 
-//------------------------------------------------Déclaration/ajout google map et marqueurs :
+
+//-----function pour déclarer, ajouter et créer des event sur la google map, les marqueurs, les divs de l'application :
 function initMap(data) {
-
-  const googleMap = new google.maps.Map(document.getElementById('map'), {
-    zoom: 12,
-    center: {lat: 45.750000, lng: 4.850000}
-  });
-
-  const markers =[];
-  data.forEach(function (stations){
-    const icon = "images/iconelyon.png";
-
-    const marker = new google.maps.Marker({
-      position: new google.maps.LatLng(stations.position),
-      map: googleMap,
-      icon: icon
+    //Déclaration et ajout de la google map :
+    const googleMap = new google.maps.Map(document.getElementById('map'), {
+      zoom: 12,
+      center: {
+        lat: 45.750000,
+        lng: 4.850000
+      }
     });
-    marker.addListener('click', function() {
-     infoStationsElt.style.display = "block";
-     infoStationsElt.style.display = "flex";
-     nameStationElt.textContent = "Station : " + stations.name;
-     addressStationElt.textContent = "Adresse : " + stations.address;
-     bankingStationElt.textContent = stations.banking;
-     const banking = stations.banking;
-     //interpretation de la propriété banking :
-     if (banking === true){
-      bankingStationElt.textContent = "Cette station a un terminal de paiement.";
-     } else {
-      bankingStationElt.textContent = "Cette station n'a pas de terminal de paiement.";
-     }
-     statusStationElt.textContent = stations.status;
-     const status = stations.status;
-     if (status === open) {
 
-      statusStationElt.textContent = "Elle est actuellement ouverte.";
-     } else {
-      statusStationElt.textContent = "Elle est actuellement fermée.";
-     }
-     bikestandsStationElt.textContent = stations.bikestands + " points d'attache opérationnels.";
-     availableBikeStandsStationElt.textContent = stations.availableBikeStands + " points d'attache disponibles pour y ranger un vélo.";
-     availableBikesStationElt.textContent = stations.availableBikes + "  vélos disponibles et opérationnels.";
+    //Déclaration d'un tableau de marqueurs :
+    const markers = [];
 
-      bookingButtonElt.addEventListener("click", function() {
-      const formElt = document.createElement("form");
-      formElt.id = "form_canvas";
-      mainWrapperElt.insertBefore(formElt, footerElt);
-//<label>Cliquez ici<input type="text" id="Utilisateur" name="Nom" /></label>
-      const firtsNameElt = document.createElement("label");
-      firtsNameElt.id = "first_name";
-      firtsNameElt.textContent = "Prénom : ";
-      const inputFirstNameElt = createInput("input_first_name", "text", "", firtsNameElt);
-      formElt.appendChild(firtsNameElt);
 
-      const lastNameElt = document.createElement("label");
-      lastNameElt.id = "last_name";
-      lastNameElt.textContent = "Nom : ";
-      const inputLastNameElt = createInput("input_last_name", "text", "", lastNameElt);
-      formElt.appendChild(lastNameElt);
+    //Boucle qui parcours les stations de Lyon afin d'ajouter un marqueur par station sur la google map :
+    data.forEach(function(stations) {
+        //Image personnalisée sélectionnée pour le marqueur :
+        const icon = "images/iconelyon.png";
+        //Déclaration et ajout de l'objet marqueur :
+        const marker = new google.maps.Marker({
+          position: new google.maps.LatLng(stations.position),
+          map: googleMap,
+          icon: icon
+        });
 
-      const titleSignatureElt = document.createElement("p");
-      titleSignatureElt.id = "title_signature";
-      titleSignatureElt.textContent = "Signature :";
-      formElt.appendChild(titleSignatureElt);
 
-      const canvasElt = document.createElement("canvas");
-      canvasElt.id = "canvas_elt";
-      const canvasContextElt = canvasElt.getContext("2d");
-      formElt.appendChild(canvasElt);
+        //------------ajout de l'event quand l'utilisateur click sur un marqueur :
+        marker.addListener('click', function() {
+            //la div "info_stations" apparait quand l'utilisateur click sur un marqueur :
+            infoStationsElt.style.display = "block";
+            infoStationsElt.style.display = "flex";
+            nameStationElt.textContent = "Station : " + stations.name;
+            addressStationElt.textContent = "Adresse : " + stations.address;
+            bankingStationElt.textContent = stations.banking;
+            //si bankingStationElt égal à true alors la station sélectionnée a un terminal de paiement et le premier message apparait :
+            if (bankingStationElt.textContent = true) {
+              bankingStationElt.textContent = "Cette station a un terminal de paiement.";
+                //autrement la station sélectionnée n'a pas de terminal de paiement et le second message apparait :
+              } else {
+                bankingStationElt.textContent = "Cette station n'a pas de terminal de paiement.";
+              }
+              statusStationElt.textContent = stations.status;
+            //si statusStationElt est égal à open alors la station sélectionnée est ouverte et le premier message apparait :
+            if (statusStationElt.textContent = "open") {
+              statusStationElt.textContent = "Elle est actuellement ouverte.";
+                //autrement la station sélectionnée est fermée et le second message apparait :
+              } else {
+                statusStationElt.textContent = "Elle est actuellement fermée.";
+              }
+              bikestandsStationElt.textContent = stations.bikestands + " points d'attache opérationnels.";
+              availableBikeStandsStationElt.textContent = stations.availableBikeStands + " points d'attache disponibles pour y ranger un vélo.";
+              availableBikesStationElt.textContent = stations.availableBikes + "  vélos disponibles et opérationnels.";
 
-      const validButtonElt = createInput("valid_button", "submit", "Valider", formElt);
-      const clearButtonElt = createInput("clear_button", "button", "Effacer", formElt);
-     })
-   });
-    markers.push(marker);
-  });
-  const markerCluster = new MarkerClusterer(googleMap, markers, {
-    imagePath: 'images/m',
+            //--------ajout de l'event quand l'utilisateur click sur le bouton réserver :
+            bookingButtonElt.addEventListener("click", function() {
 
-  })
-  return googleMap;
-};
+                //Déclaration et ajout dans le main wrapper d'un formulaire contenant le canvas :
+                const formElt = document.createElement("form");
+                formElt.id = "form_canvas";
+                mainWrapperElt.insertBefore(formElt, footerElt);
+
+                //Déclaration et ajout de deux champs pour renseigner le prénom et le nom de l'utilisateur :
+                const firtsNameElt = document.createElement("label");
+                firtsNameElt.id = "first_name";
+                firtsNameElt.textContent = "Prénom : ";
+                const inputFirstNameElt = createInput("input_first_name", "text", "", firtsNameElt);
+                formElt.appendChild(firtsNameElt);
+
+                const lastNameElt = document.createElement("label");
+                lastNameElt.id = "last_name";
+                lastNameElt.textContent = "Nom : ";
+                const inputLastNameElt = createInput("input_last_name", "text", "", lastNameElt);
+                formElt.appendChild(lastNameElt);
+
+                //Déclaration et ajout d'un paragraphe pour cibler la zone de signature pour l'utilisateur :
+                const titleSignatureElt = document.createElement("p");
+                titleSignatureElt.id = "title_signature";
+                titleSignatureElt.textContent = "Signature :";
+                formElt.appendChild(titleSignatureElt);
+
+                //Déclaration et ajout du canvas pour que l'utilisateur puisse signer :
+                const canvas = document.createElement('canvas');
+                canvas.setAttribute('width', "250px");
+                canvas.setAttribute('height', "150px");
+                canvas.setAttribute('id', 'canvas');
+                //Déclaration du contexte de dessin dans le canvas :
+                const context = canvas.getContext("2d");
+
+                formElt.appendChild(canvas);
+
+                //Déclaration des let utilisées dans le canvas :
+                let clickX = new Array();
+                let clickY = new Array();
+                let clickDrag = new Array();
+                let paint = undefined;
+
+                //fonction qui enregistre les données de la souris :
+                function addClick(x, y, dragging) {
+                  clickX.push(x);
+                  clickY.push(y);
+                  clickDrag.push(dragging);
+                };
+
+                //fonction pour dessiner les données :
+                function redraw() {
+                  //efface le canvas :
+                  context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+                  //couleur du dessin :
+                  context.strokeStyle = "black";
+                  //coin arrondie lorsque les lignes se rejoignent :
+                  context.lineJoin = "round";
+                  //largeur des lignes :
+                  context.lineWidth = 4;
+
+
+                  for (let i = 0; i < clickX.length; i++) {
+                    context.beginPath();
+                    if (clickDrag[i] && i) {
+                      context.moveTo(clickX[i - 1], clickY[i - 1]);
+                    } else {
+                      context.moveTo(clickX[i] - 1, clickY[i]);
+                    }
+                    context.lineTo(clickX[i], clickY[i]);
+                    context.closePath();
+                    context.stroke();
+                  }
+                };
+
+                //Ajout d'un event sur le canvas :
+                //Lorsque l'utilisateur clique sur le canevas, les données de position sont enregistrées dans un tableau via la addClick fonction :
+                canvas.addEventListener("mousedown", function(e) {
+                  //e.pageY : renvoie la coordonnée Y (verticale) en pixels de l'événement par rapport au document entier :
+                  //offsetTop renvoie la distance entre l'élément courant et le haut du nœud offsetParent.
+                  //Renvoie le nombre de pixels dont le coin supérieur gauche de l'élément courant est décalé vers là gauche au sein du nœud offsetParent.
+                  const mouseX = e.pageX - this.offsetLeft;
+                  const mouseY = e.pageY - this.offsetTop;
+                  //il s'agit du marqueur de la signature :
+                  paint = true;
+                  addClick(e.pageX - this.offsetLeft, e.pageY - this.offsetTop);
+                  redraw();
+                });
+
+                //Ajout event sur le canvas : quand le marqueur (égal true) est sur le canvas alors les fonction addclick et redraw sont effectuées :
+                canvas.addEventListener("mousemove", function(e) {
+                  if (paint) {
+                    addClick(e.pageX - this.offsetLeft, e.pageY - this.offsetTop, true);
+                    redraw();
+                  }
+                })
+
+                //Ajout event sur le canvas : quansd le marqueur n'est pas appuyé sur le canvas alors le marqueur n'écrit pas :
+                canvas.addEventListener("mouseup", function(e) {
+                  paint = false;
+                })
+
+                ////Ajout event sur le canvas : quansd le marqueur est en dehors du canvas alors le marqueur n'écrit pas :
+                canvas.addEventListener("mouseleave", function(e) {
+                  paint = false;
+                })
+
+                //Déclaration et ajout des bouttons valider et effacer :
+                const validButtonElt = createInput("valid_button", "submit", "Valider", formElt);
+                const clearButtonElt = createInput("clear_button", "button", "Effacer", formElt);
+
+                //Ajout d'un event sur clearButtonElt : quand l'utilisateur clique sur le bouton effacer les tableaux de données enregistrées sont remis à zéro :
+                clearButtonElt.addEventListener("mousedown", function(e) {
+
+                  clickX = new Array();
+                  clickY = new Array();
+                  clickDrag = new Array();
+
+                  function clearCanvas() {
+                    context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+                  }
+                  clearCanvas();
+                });
+
+                validButtonElt.addEventListener('click', function() {
+                  let data = canvas.toDataURL('image/png');
+
+                    // Send data to server instead...
+                    window.open(data);
+                  });
+
+              })
+});
+        //ajout des marqueurs dans le tableau markers :
+        markers.push(marker);
+      });
+    //Déclaration et ajout de l'objet markercluster pour le regroupement de tous les marqeurs :
+    const markerCluster = new MarkerClusterer(googleMap, markers, {
+      imagePath: 'images/m',
+    });
+
+    return googleMap;
+
+  };
 
 
 //_________________________________________________appel AJAX:
@@ -172,10 +300,3 @@ fetch('https://cors-anywhere.herokuapp.com/https://api.jcdecaux.com/vls/v1/stati
 .then(data => displayStations(data))
 .then(data => initMap(data))
 .catch(error => console.log(error));
-
-
-//__________________________________________________Ajout event :
-
-//-----------------------------------------------event sur marker :
-
-
