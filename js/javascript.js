@@ -58,7 +58,6 @@ class User {
 //const user = new User ("bibi", "baba", "bubu");
 //console.log(user);
 
-
 //---------------------class Booking  pour les réservation de vélo :
 
 class Booking {
@@ -209,16 +208,21 @@ function initMap(data) {
                   //largeur des lignes :
                   context.lineWidth = 4;
 
-
+                  //boucle for qui dessine la signature de l'utilisateur :
                   for (let i = 0; i < clickX.length; i++) {
+                    //introduit le dessin à créer et les méthodes utilisées :
                     context.beginPath();
+                    //permet de prendre en comptetous les données de déplacement :
                     if (clickDrag[i] && i) {
                       context.moveTo(clickX[i - 1], clickY[i - 1]);
                     } else {
                       context.moveTo(clickX[i] - 1, clickY[i]);
                     }
+                    //liaison entre toutes les données (les lignes) :
                     context.lineTo(clickX[i], clickY[i]);
+                    //liaison entre le point actuel (les données actuelles) et le point de départ (les données de départ) de la signature :
                     context.closePath();
+                    //Dessine la signature réellement après avoir pris les données des méthodes précédentes :
                     context.stroke();
                   }
                 };
