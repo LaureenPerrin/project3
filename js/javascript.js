@@ -29,6 +29,7 @@ const footerElt = document.querySelector("footer");
 const bookingButtonElt = document.getElementById("booking_button");
 
 
+
 //________________________________________________________________Déclarations des class :
 
 //-----------------------class Station pour les stations de vélo de Lyon :
@@ -94,6 +95,7 @@ function displayStations(stations) {
 
 
 
+
 //-----function pour déclarer, ajouter et créer des event sur la google map, les marqueurs, les divs de l'application :
 function initMap(data) {
     //Déclaration et ajout de la google map :
@@ -147,7 +149,7 @@ function initMap(data) {
             bikestandsStationElt.textContent = stations.bikestands + " points d'attache opérationnels.";
             availableBikeStandsStationElt.textContent = stations.availableBikeStands + " points d'attache disponibles pour y ranger un vélo.";
             availableBikesStationElt.textContent = stations.availableBikes + "  vélos disponibles et opérationnels.";
-            let availableBikesElt = stations.availableBikes;
+            var availableBikesElt = stations.availableBikes;
 
             //--------ajout de l'event quand l'utilisateur click sur le bouton réserver :
             bookingButtonElt.addEventListener("click", function(e) {
@@ -161,13 +163,15 @@ function initMap(data) {
                     impossibleBookingElt.id = "impossible_booking";
                     impossibleBookingElt.textContent = "Malheureusement, il n'y a plus de vélos disponibles dans cette station."
                     mainWrapperElt.insertBefore(impossibleBookingElt, footerElt);
+
                     //ce message disparait au bout de 3 secondes :
                     setTimeout(function() {
-                        mainWrapperElt.removeChild(impossibleBookingElt);
+                        mainWrapperElt.replaceChild(infoStationsElt, impossibleBookingElt);
                     }, 3000);
 
 
                 } else {
+
                     //sinon une div de réservation apparait :
 
                     //Déclaration et ajout dans le main wrapper d'un formulaire contenant le canvas :
@@ -253,7 +257,7 @@ function initMap(data) {
                         }
                     };
 
-                    //Ajout d'un event sur le canvas :
+                    //-----------Ajout d'un event sur le canvas :
                     //Lorsque l'utilisateur clique sur le canevas, les données de position sont enregistrées dans un tableau via la addClick fonction :
                     canvas.addEventListener("mousedown", function(e) {
                         //e.pageY : renvoie la coordonnée Y (verticale) en pixels de l'événement par rapport au document entier :
@@ -268,7 +272,7 @@ function initMap(data) {
                         validCanvas = true;
                     });
 
-                    //Ajout event sur le canvas : quand le marqueur (égal true) est sur le canvas alors les fonction addclick et redraw sont effectuées :
+                    //--------Ajout event sur le canvas : quand le marqueur (égal true) est sur le canvas alors les fonction addclick et redraw sont effectuées :
                     canvas.addEventListener("mousemove", function(e) {
                         if (paint) {
                             addClick(e.pageX - this.offsetLeft, e.pageY - this.offsetTop, true);
@@ -277,12 +281,12 @@ function initMap(data) {
                         }
                     })
 
-                    //Ajout event sur le canvas : quansd le marqueur n'est pas appuyé sur le canvas alors le marqueur n'écrit pas :
+                    //---------Ajout event sur le canvas : quansd le marqueur n'est pas appuyé sur le canvas alors le marqueur n'écrit pas :
                     canvas.addEventListener("mouseup", function(e) {
                         paint = false;
                     })
 
-                    ////Ajout event sur le canvas : quansd le marqueur est en dehors du canvas alors le marqueur n'écrit pas :
+                    ////--------Ajout event sur le canvas : quansd le marqueur est en dehors du canvas alors le marqueur n'écrit pas :
                     canvas.addEventListener("mouseleave", function(e) {
                         paint = false;
                     })
@@ -293,7 +297,9 @@ function initMap(data) {
                     const validButtonElt = createInput("valid_button", "submit", "Valider", formElt);
                     const clearButtonElt = createInput("clear_button", "button", "Effacer", formElt);
 
-                    //Ajout d'un event sur clearButtonElt : quand l'utilisateur clique sur le bouton effacer les tableaux de données enregistrées sont remis à zéro :
+
+
+                    //-----Ajout d'un event sur clearButtonElt : quand l'utilisateur clique sur le bouton effacer les tableaux de données enregistrées sont remis à zéro :
                     clearButtonElt.addEventListener("mousedown", function(e) {
 
                         clickX = new Array();
@@ -306,29 +312,36 @@ function initMap(data) {
                         clearCanvas();
                     });
 
+
+
                     //let firtsName = inputFirstNameElt.value;
                     //let signature = canvas.toDataURL();
                     validButtonElt.addEventListener("click", function(e) {
 
                         if (validCanvas === false) {
-                            alert("Veuiller signer s'il vous plaît !");
+                            alert("Veuillez signer s'il vous plaît !");
                             e.preventDefault();
                         } else {
+
                             console.log("c'est ok continuer");
 
                         }
                     });
 
-                }
+                };
 
             });
 
 
 
+
         });
+
         //ajout des marqueurs dans le tableau markers :
         markers.push(marker);
     });
+
+
     //Déclaration et ajout de l'objet markercluster pour le regroupement de tous les marqeurs :
     const markerCluster = new MarkerClusterer(googleMap, markers, {
         imagePath: 'images/m',
@@ -340,23 +353,11 @@ function initMap(data) {
 };
 
 
+
 //_________________________________________________appel AJAX:
 fetch('https://cors-anywhere.herokuapp.com/https://api.jcdecaux.com/vls/v1/stations?contract=lyon&apiKey=b9eae55b32f61852fc6a740a3867d131bb01dd37')
     .then(infosStations => infosStations.json())
     .then(data => displayStations(data))
     .then(data => initMap(data))
+    .then(data => eventBooking(data))
     .catch(error => console.log(error));
-
-/*} else {
-              bookingButtonElt.addEventListener("click", function() {
-
-                  const impossibleBookingElt = document.createElement("p");
-                  impossibleBookingElt.id = "impossible_booking";
-                  impossibleBookingElt.textContent = "Malheureusement, il n'y a plus de vélos disponibles dans cette station."
-                  mainWrapperElt.insertBefore(impossibleBookingElt, footerElt);
-
-                  setTimeout(function() {
-                      mainWrapperElt.removeChild(impossibleBookingElt);
-                  }, 3000);
-              });
-          }*/
