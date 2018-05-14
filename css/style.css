@@ -27,18 +27,14 @@ body
 }
 
 h1 {
-  font-weight: bold;
-  padding-top: 15px;
+ font-weight: bold;
+ padding-top: 15px;
 }
 
 
 /*____________le corps de la page______________________________*/
 
-html, body, #main_wrapper {
-  height: 100%;
-  margin-top: -11px;
-  padding: 0;
-}
+
 
 /*____________________________header_________________________________________*/
 
@@ -49,11 +45,72 @@ header {
   height: 100px;
   background-color: #00FFFF;
 }
+
+/*________________________________slider___________________________________________*/
+
+
+
+#slider{
+    position:relative;
+    margin:auto;
+    max-width: 80%;
+}
+
+#slider ul li{
+    list-style-type: none;
+}
+
+#slider ul li img{
+    max-width: 100%;
+    margin-right: auto;
+}
+
+#prev, #next {
+  cursor: pointer;
+  position: absolute;
+  top: 45px;
+  margin-top: -22px;
+  padding: 16px;
+  color: black;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+#next
+{
+  right: 0;
+  top: 200px;
+}
+
+#prev {
+    left: 0;
+    top: 200px;
+}
+
+#prev:hover
+{
+  border: 2px solid rgb(73, 67, 83);
+  border-top-right-radius: 40px;
+  border-bottom-right-radius: 40px;
+  background-color: rgb(73, 67, 83);
+  color: bwhite;
+ }
+
+ #next:hover
+ {
+  border: 2px solid rgb(73, 67, 83);
+  border-top-left-radius: 40px;
+  border-bottom-left-radius: 40px;
+  background-color: rgb(73, 67, 83);
+  color: white;
+ }
+
 /*_______________________google map_________________________________________*/
 
 #map {
   height: 700px;
-  width: 100%;
+  width: 80%;
+  margin: auto;
 }
 
 /*_________________________div infos stations_______________________________________________*/

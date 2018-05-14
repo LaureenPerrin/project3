@@ -28,6 +28,13 @@ const footerElt = document.querySelector("footer");
 
 const bookingButtonElt = document.getElementById("booking_button");
 
+ var $slider = $('#slider'), // on cible le bloc du slider
+        $img = $('#slider img'), // on cible les images contenues dans le slider
+        indexImg = $img.length - 1, // on définit l'index du dernier élément
+        i = 0, // on initialise un compteur
+        $currentImg = $img.eq(i); // enfin, on cible l'image courante, qui possède l'index i (0 pour l'instant)
+
+
 
 
 //________________________________________________________________Déclarations des class :
@@ -72,6 +79,22 @@ class Booking {
 
 //__________________________________________Déclarations des fonctions utilisées :
 
+    function slideImg() {
+
+            if (i < indexImg) { // si le compteur est inférieur au dernier index
+                i++; // on l'incrémente
+            } else { // sinon, on le remet à 0 (première image)
+                i = 0;
+            }
+
+            $img.css('display', 'none');
+
+            $currentImg = $img.eq(i);
+            $currentImg.css('display', 'block');
+
+
+
+    }
 //-----------------------------------fonction pour créer des inputs :
 function createInput(id, type, value, parent) {
     const inputCanvasElt = document.createElement("input");
@@ -359,5 +382,44 @@ fetch('https://cors-anywhere.herokuapp.com/https://api.jcdecaux.com/vls/v1/stati
     .then(infosStations => infosStations.json())
     .then(data => displayStations(data))
     .then(data => initMap(data))
-    .then(data => eventBooking(data))
     .catch(error => console.log(error));
+
+//___________________________________________Slider :
+$(document).ready(function() {
+
+
+    $img.css('display', 'none'); // on cache les images
+    $currentImg.css('display', 'block'); // on affiche seulement l'image courante
+
+
+
+    $('#next').click(function() { // image suivante
+
+        i++; // on incrémente le compteur
+
+        if (i <= indexImg) {
+            $img.css('display', 'none'); // on cache les images
+            $currentImg = $img.eq(i); // on définit la nouvelle image
+            $currentImg.css('display', 'block'); // puis on l'affiche
+        } else {
+           i = indexImg;
+        }
+
+    });
+
+    $('#prev').click(function() { // image précédente
+
+        i--; // on décrémente le compteur, puis on réalise la même chose que pour la fonction "suivante"
+
+        if (i >= 0) {
+            $img.css('display', 'none');
+            $currentImg = $img.eq(i);
+            $currentImg.css('display', 'block');
+        } else {
+            i = 0;
+        }
+
+    });
+
+slideImg(); // on oublie pas de relancer la fonction à la fin
+});
