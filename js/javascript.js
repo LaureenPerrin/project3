@@ -28,13 +28,11 @@ const footerElt = document.querySelector("footer");
 
 const bookingButtonElt = document.getElementById("booking_button");
 
- var $slider = $('#slider'), // on cible le bloc du slider
-        $img = $('#slider img'), // on cible les images contenues dans le slider
-        indexImg = $img.length - 1, // on définit l'index du dernier élément
-        i = 0, // on initialise un compteur
-        $currentImg = $img.eq(i); // enfin, on cible l'image courante, qui possède l'index i (0 pour l'instant)
-
-
+var $slider = $('#slider'), // on cible le bloc du slider
+    $img = $('#slider img'), // on cible les images contenues dans le slider
+    indexImg = $img.length - 1, // on définit l'index du dernier élément
+    i = 0, // on initialise un compteur
+    $currentImg = $img.eq(i); // enfin, on cible l'image courante, qui possède l'index i (0 pour l'instant)
 
 
 //________________________________________________________________Déclarations des class :
@@ -79,22 +77,22 @@ class Booking {
 
 //__________________________________________Déclarations des fonctions utilisées :
 
-    function slideImg() {
+//----------------------------------------fonction pour le slider :
+function slideImg() {
 
-            if (i < indexImg) { // si le compteur est inférieur au dernier index
-                i++; // on l'incrémente
-            } else { // sinon, on le remet à 0 (première image)
-                i = 0;
-            }
-
-            $img.css('display', 'none');
-
-            $currentImg = $img.eq(i);
-            $currentImg.css('display', 'block');
-
-
-
+    if (i < indexImg) { // si le compteur est inférieur au dernier index
+        i++; // on l'incrémente
+    } else { // sinon, on le remet à 0 (première image)
+        i = 0;
     }
+
+    $img.css('display', 'none');
+
+    $currentImg = $img.eq(i);
+    $currentImg.css('display', 'block');
+
+}
+
 //-----------------------------------fonction pour créer des inputs :
 function createInput(id, type, value, parent) {
     const inputCanvasElt = document.createElement("input");
@@ -345,9 +343,13 @@ function initMap(data) {
                             alert("Veuillez signer s'il vous plaît !");
                             e.preventDefault();
                         } else {
-
+                            let now = new Date();
+                            let minute = now.getMinutes();
+                            let seconde = now.getSeconds();
                             console.log("c'est ok continuer");
-
+                            let compteurElt = document.createElement("div");
+                            compteurElt.textContent = "1 vélo a été réservé pour " + minute + " minutes et " + seconde + " secondes.";
+                            mainWrapperElt.insertBefore(compteurElt, footerElt);
                         }
                     });
 
@@ -402,7 +404,7 @@ $(document).ready(function() {
             $currentImg = $img.eq(i); // on définit la nouvelle image
             $currentImg.css('display', 'block'); // puis on l'affiche
         } else {
-           i = indexImg;
+            i = indexImg;
         }
 
     });
@@ -420,6 +422,5 @@ $(document).ready(function() {
         }
 
     });
-
-slideImg(); // on oublie pas de relancer la fonction à la fin
+    slideImg(); // on oublie pas de relancer la fonction à la fin
 });
