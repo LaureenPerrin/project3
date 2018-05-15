@@ -48,8 +48,6 @@ header {
 
 /*________________________________slider___________________________________________*/
 
-
-
 #slider{
     position:relative;
     margin:auto;
@@ -98,7 +96,7 @@ header {
   border-top-right-radius: 40px;
   border-bottom-right-radius: 40px;
   background-color: rgb(73, 67, 83);
-  color: bwhite;
+  color: white;
  }
 
  #next:hover
