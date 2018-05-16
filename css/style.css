@@ -45,6 +45,18 @@ header {
 
 /*________________________________slider___________________________________________*/
 
+#container {
+    margin: auto;
+    margin-top: auto;
+    margin-bottom: auto;
+    border: 1px double black;
+    border-radius: 3px;
+    box-shadow: 1px 1px 12px #555;
+    margin-top: 10px;
+    margin-bottom: 15px;
+    max-width: 80%;
+}
+
 #slider {
     position:relative;
     margin:auto;
@@ -77,12 +89,12 @@ header {
 
 #next {
   right: 0;
-  top: 100px;
+  top: 120px;
 }
 
 #prev {
     left: 0;
-    top: 100px;
+    top: 120px;
 }
 
 #prev:hover {
@@ -114,23 +126,30 @@ header {
   height: 600px;
   width: 80%;
   margin: auto;
+  border-radius: 4px;
 }
 
 /*_________________________div infos stations_______________________________________________*/
 
 #info_stations {
- border:3px solid black;
- height: 400px;
- display: flex;
- flex-direction: column;
- justify-content: center;
- align-items: center;
- display:none;
- margin-bottom: 15px;
+height: 400px;
+
+flex-direction: column;
+justify-content: center;
+align-items: center;
+display: none;
+margin-bottom: 15px;
+border: 1px double black;
+border-radius: 3px;
+box-shadow: 1px 1px 12px #555;
+max-width: 80%;
+margin: auto;
+    margin-top: auto;
+margin-top: 15px;
 }
 
 #title_info {
-  text-decoration: underline;
+    text-decoration: underline;
 }
 
 #title_info, input {
@@ -140,15 +159,19 @@ header {
 /*_______________________________________canvas__________________________________________*/
 
 #form_canvas {
- height: 400px;
- width: 300px;
- border: 3px solid black;
- display: flex;
- flex-direction: column;
- align-items: center;
- margin: auto;
- padding-bottom: 10px;
- padding-top: 15px;
+height: 400px;
+width: 300px;
+border: 1px solid black;
+display: flex;
+flex-direction: column;
+align-items: center;
+margin: auto;
+    margin-top: auto;
+padding-bottom: 10px;
+padding-top: 15px;
+border-radius: 3px;
+box-shadow: 1px 1px 12px #555;
+margin-top: 15px;
 }
 
 label#last_name {
@@ -179,6 +202,21 @@ canvas {
 }
 
 
+/*_____________________________________compteur_____________________________________*/
+
+#compteur {
+
+    border: 1px solid black;
+    border-radius: 3px;
+    box-shadow: 1px 1px 12px #555;
+    max-width: 80%;
+    margin: auto;
+        margin-top: auto;
+    text-align: center;
+    margin-top: 15px;
+    padding: 20px 0px 20px 0px;
+    display: none;
+}
 
 
 /*__________________________footer_________________________________________*/
