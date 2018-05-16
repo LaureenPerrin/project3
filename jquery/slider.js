@@ -1,4 +1,4 @@
-var $slider = $('#slider'), // on cible le bloc du slider
+let $slider = $('#slider'), // on cible le bloc du slider
     $img = $('#slider img'), // on cible les images contenues dans le slider
     indexImg = $img.length - 1, // on définit l'index du dernier élément
     i = 0, // on initialise un compteur

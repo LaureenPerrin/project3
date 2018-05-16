@@ -79,42 +79,46 @@
                 <i id="prev" class="fa fa-angle-left fa-2x" aria-hidden="true"></i>
                 <i id="next" class="fa fa-angle-right fa-2x" aria-hidden="true"></i>
             </ul>
-            </div>
-            <div id="map"></div>
+        </div>
+        <div id="keyboard">
+            <p>Vous pouvez aussi utiliser les touches de votre clavier pour parcourir le diaporama.</p>
+            <img class="keyboard_key" src="images/keyboard.png" alt="touche de clavier gauche et droite"/>
+        </div>
+        <div id="map"></div>
 
-            <div id="info_stations">
-                <p id="title_info">Détail de la station</p>
+        <div id="info_stations">
+            <p id="title_info">Détail de la station</p>
 
-                <p id="name_station"></p>
-                <p id="address_station"></p>
-                <ul>
-                    <li id="banking_station"></li>
-                    <li id="status_station"></li>
-                    <p id="infos">Elle dispose de :</p>
-                    <li id="bike_stands_stations"></li>
-                    <li id="available_bike_stands_station"></li>
-                    <li id="available_bikes_station"></li>
-                </ul>
-                <input id="booking_button" type="button" value="Réserver">
-            </div>
-
-            <footer>
-                <p>2018 - Application web factice développée par Laureen Perrin pour l'établissement OpenClassRooms</p>
-            </footer>
-
+            <p id="name_station"></p>
+            <p id="address_station"></p>
+            <ul>
+                <li id="banking_station"></li>
+                <li id="status_station"></li>
+                <p id="infos">Elle dispose de :</p>
+                <li id="bike_stands_stations"></li>
+                <li id="available_bike_stands_station"></li>
+                <li id="available_bikes_station"></li>
+            </ul>
+            <input id="booking_button" type="button" value="Réserver">
         </div>
 
-        <script src="js/ajax.js"></script>
-        <!--bibliothèque jquery depuis les serveurs de Google -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-        <script src="jquery/slider.js"></script>
-        <script src="js/javascript.js"></script>
+        <footer>
+            <p>2018 - Application web factice développée par Laureen Perrin pour l'établissement OpenClassRooms</p>
+        </footer>
 
-        <!---regroupement de marqueurs-->
-        <script src="js/markerclusterer.js"></script>
-        <!--Api google map-->
-        <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDncDjLeVaq_Sqq2xDfsoYFFaMOq8ftIJk"></script>
+    </div>
 
-    </body>
+    <script src="js/ajax.js"></script>
+    <!--bibliothèque jquery depuis les serveurs de Google -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <script src="jquery/slider.js"></script>
+    <script src="js/javascript.js"></script>
 
-    </html>
+    <!---regroupement de marqueurs-->
+    <script src="js/markerclusterer.js"></script>
+    <!--Api google map-->
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDncDjLeVaq_Sqq2xDfsoYFFaMOq8ftIJk"></script>
+
+</body>
+
+</html>

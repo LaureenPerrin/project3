@@ -28,12 +28,7 @@ const footerElt = document.querySelector("footer");
 
 const bookingButtonElt = document.getElementById("booking_button");
 
-var $slider = $('#slider'), // on cible le bloc du slider
-    $img = $('#slider img'), // on cible les images contenues dans le slider
-    indexImg = $img.length - 1, // on définit l'index du dernier élément
-    i = 0, // on initialise un compteur
-    $currentImg = $img.eq(i); // enfin, on cible l'image courante, qui possède l'index i (0 pour l'instant)
-
+  var compte_a_rebours = document.createElement("div");
 
 //________________________________________________________________Déclarations des class :
 
@@ -114,7 +109,35 @@ function displayStations(stations) {
     return stationsArray;
 }
 
+function compteRebour() {
+ mainWrapperElt.insertBefore(compte_a_rebours, footerElt);
+    //On récupere l'heure de reservation dans le storage
+    var sessionHeure = sessionStorage.getItem('heure');
 
+    var decompte = setInterval(function() {
+        // On récupére l'heure actuelle en secondes
+        var temps = new Date().getTime();
+        // On fait la différence entre l'heure actuelle et l'heure de la réservation
+        var differenceTemps = temps - Number(sessionHeure);
+        // On initialise le compteur à 20 minutes (1.200.000 millisecondes)
+        var compteur = Math.round((100000 - differenceTemps) / 1000);
+        // On calcule les minutes et les secondes restantes
+        var minutes = Math.floor(compteur / 60);
+        var secondes = compteur % 60;
+
+        // On affiche le compteur en fonction du temps qu'il reste
+        if (minutes > 0) {
+          compte_a_rebours.textContent="La réservation expirera dans " + minutes + " minutes et " + secondes + " secondes";
+        } else {
+            compte_a_rebours.textContent="La réservation expirera dans "+ secondes + " secondes";
+        }
+        //On stop le compteur et on execute la fonction annulation
+        /*if (minutes <= 0 && secondes <= 0) {
+            clearInterval(decompte);
+            annulation();
+        }*/
+    }, 0);
+}
 
 
 //-----function pour déclarer, ajouter et créer des event sur la google map, les marqueurs, les divs de l'application :
@@ -338,19 +361,15 @@ function initMap(data) {
                     //let firtsName = inputFirstNameElt.value;
                     //let signature = canvas.toDataURL();
                     validButtonElt.addEventListener("click", function(e) {
-
-                        if (validCanvas === false) {
+                            if (validCanvas === false) {
                             alert("Veuillez signer s'il vous plaît !");
                             e.preventDefault();
                         } else {
-                            let now = new Date();
-                            let minute = now.getMinutes();
-                            let seconde = now.getSeconds();
-                            console.log("c'est ok continuer");
-                            let compteurElt = document.createElement("div");
-                            compteurElt.textContent = "1 vélo a été réservé pour " + minute + " minutes et " + seconde + " secondes.";
-                            mainWrapperElt.insertBefore(compteurElt, footerElt);
+
+compteRebour();
+
                         }
+
                     });
 
                 };
@@ -385,71 +404,3 @@ fetch('https://cors-anywhere.herokuapp.com/https://api.jcdecaux.com/vls/v1/stati
     .then(data => displayStations(data))
     .then(data => initMap(data))
     .catch(error => console.log(error));
-
-//___________________________________________Slider :
-$(document).ready(function() {
-
-
-    $img.css('display', 'none'); // on cache les images
-    $currentImg.css('display', 'block'); // on affiche seulement l'image courante
-
-      $(document).keyup(function(e){
-    if(e.keyCode === 37){
-         i--; // on décrémente le compteur, puis on réalise la même chose que pour la fonction "suivante"
-
-        if (i >= 0) {
-            $img.css('display', 'none');
-            $currentImg = $img.eq(i);
-            $currentImg.css('display', 'block');
-        } else {
-            i = 0;
-        }
-    }
-    else if(e.keyCode === 39){
-          i++; // on incrémente le compteur
-
-        if (i <= indexImg) {
-            $img.css('display', 'none'); // on cache les images
-            $currentImg = $img.eq(i); // on définit la nouvelle image
-            $currentImg.css('display', 'block'); // puis on l'affiche
-        } else {
-            i = indexImg;
-        }
-
-    }
-    });
-
-    $('#next').click(function() { // image suivante
-
-        i++; // on incrémente le compteur
-
-        if (i <= indexImg) {
-            $img.css('display', 'none'); // on cache les images
-            $currentImg = $img.eq(i); // on définit la nouvelle image
-            $currentImg.css('display', 'block'); // puis on l'affiche
-        } else {
-            i = indexImg;
-        }
-
-    });
-
-    $('#prev').click(function() { // image précédente
-
-        i--; // on décrémente le compteur, puis on réalise la même chose que pour la fonction "suivante"
-
-        if (i >= 0) {
-            $img.css('display', 'none');
-            $currentImg = $img.eq(i);
-            $currentImg.css('display', 'block');
-        } else {
-            i = 0;
-        }
-
-    });
-
-
-
-
-
-    slideImg(); // on oublie pas de relancer la fonction à la fin
-});
