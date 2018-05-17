@@ -55,6 +55,7 @@ header {
     margin-top: 10px;
     margin-bottom: 15px;
     max-width: 80%;
+    position: relative;
 }
 
 #slider {
@@ -89,12 +90,12 @@ header {
 
 #next {
   right: 0;
-  top: 120px;
+  top: 170px;
 }
 
 #prev {
     left: 0;
-    top: 120px;
+    top: 170px;
 }
 
 #prev:hover {
