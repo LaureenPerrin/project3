@@ -115,13 +115,17 @@ function displayStations(stations) {
 
 
 //--------------------------------fonction pour les images des marqueurs :
-function IconMarker(stations) {
+function iconMarker(stations) {
     let icon;
-    //condition d'affichage des différent markers plus marker rouge moins de velo dispo
+    //condition d'affichage des images des marqueurs :
+    //si la station est ouverte le marqueurs est rouge :
     if (stations.status === "OPEN") {
         icon = 'images/iconelyon.png';
-    } else if (stations.availableBikes === 0) {
-        icon = "images/iconlyon_vert.png";
+        //mais si la station n'a plus de vélos disponibles le marqueur est vert :
+        if (stations.availableBikes === 0) {
+            icon = "images/iconlyon_vert.png";
+        }
+    //sinon quand la station n'est pas ouverte le marqueur est bleu :
     } else if (stations.status != "OPEN") {
         icon = "images/iconelyon_bleu.png";
     }
@@ -203,7 +207,7 @@ function initMap(data) {
         const marker = new google.maps.Marker({
             position: new google.maps.LatLng(stations.position),
             map: googleMap,
-            icon: IconMarker(stations)
+            icon: iconMarker(stations)
         });
 
         //------------ajout de l'event quand l'utilisateur click sur un marqueur :
@@ -238,6 +242,8 @@ function initMap(data) {
         markers.push(marker);
     });
 
+
+
     //Déclaration et ajout de l'objet markercluster pour le regroupement de tous les marqeurs :
     const markerCluster = new MarkerClusterer(googleMap, markers, {
         imagePath: 'images/m',
@@ -256,6 +262,7 @@ function initMap(data) {
 //--------ajout de l'event quand l'utilisateur click sur le bouton réserver :
 
 bookingButtonElt.addEventListener("click", function(stations) {
+
     var availableBikesElt = stations.availableBikes;
     //--------si il n'y a aucuns vélos de disponible alors pas de réservation possible
     if (availableBikesElt <= 0) {
@@ -273,7 +280,6 @@ bookingButtonElt.addEventListener("click", function(stations) {
     } else {
 
         //sinon une div de réservation apparait :
-
         //Déclaration et ajout dans le main wrapper d'un formulaire contenant le canvas :
 
         formElt.id = "form_canvas";
