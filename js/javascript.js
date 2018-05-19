@@ -30,7 +30,7 @@ const bookingButtonElt = document.getElementById("booking_button");
 //déclaration du formulaire de réservation :
 const formElt = document.createElement("form");
 //Déclaration et ajout des bouttons valider et effacer :
-const validButtonElt = createInput("valid_button", "submit", "Valider");
+const validButtonElt = createInput("valid_button", "button", "Valider");
 const clearButtonElt = createInput("clear_button", "button", "Effacer");
 
 
@@ -57,45 +57,6 @@ let counter;
 
 const footerElt = document.querySelector("footer");
 
-//________________________________________________________________Déclarations des class utilisées:
-
-//-----------------------class Station pour les stations de vélo de Lyon :
-class Station {
-    constructor(name, address, banking, position, status, bikestands, availableBikeStands, availableBikes) {
-        this.name = name;
-        this.address = address,
-            this.banking = banking;
-        this.position = position;
-        this.status = status;
-        this.bikestands = bikestands;
-        this.availableBikeStands = availableBikeStands;
-        this.availableBikes = availableBikes;
-    }
-}
-
-
-//----------------------------------class User pour les utilisateurs :
-class User {
-    constructor(lastName, firstName, signature) {
-        this.lastName = lastName;
-        this.firstName = firstName;
-        this.signature = signature;
-    }
-}
-
-
-//console.log(user);
-
-//---------------------class Booking  pour les réservation de vélo :
-
-class Booking {
-    constructor(status, User) {
-        this.status = status;
-        this.user = User;
-    }
-}
-
-
 
 
 //_______________________________________________________________appel AJAX:
@@ -108,17 +69,17 @@ fetch('https://cors-anywhere.herokuapp.com/https://api.jcdecaux.com/vls/v1/stati
 
 
 
-
 //_____________________________________________________Déclarations des fonctions utilisées :
 
 
 //---------------------fonction pour déclarer le tableau des stations :
-function displayStations(stations) {
-    //Déclaration de l'objet station et du tablaeau stationsArray :
+function displayStations (stations) {
+    //Déclaration de l'objet station et du tableau stationsArray :
     const stationsArray = stations.map(station => new Station(station.name, station.address, station.banking, station.position, station.status, station.bike_stands, station.available_bike_stands, station.available_bikes));
     console.log(stationsArray);
     return stationsArray;
 }
+
 
 
 //--------------------------------fonction pour les images des marqueurs :
@@ -150,106 +111,30 @@ function createInput(id, type, value) {
     return inputCanvasElt;
 }
 
-
-
-//---------------------------------fonction pour créer la div infoStation :
-function divInfoStation(stations) {
-    infoStationsElt.style.display = "";
-    infoStationsElt.style.display = "flex";
-    nameStationElt.textContent = "Station : " + stations.name;
-    addressStationElt.textContent = "Adresse : " + stations.address;
-    bankingStationElt.textContent = stations.banking;
-    //si bankingStationElt égal à true alors la station sélectionnée a un terminal de paiement et le premier message apparait :
-    if (bankingStationElt.textContent = true) {
-        bankingStationElt.textContent = "Cette station a un terminal de paiement.";
-        //autrement la station sélectionnée n'a pas de terminal de paiement et le second message apparait :
-    } else {
-        bankingStationElt.textContent = "Cette station n'a pas de terminal de paiement.";
-    }
-    statusStationElt.textContent = stations.status;
-    //si statusStationElt est égal à open alors la station sélectionnée est ouverte et le premier message apparait :
-    if (statusStationElt.textContent = "open") {
-        statusStationElt.textContent = "Elle est actuellement ouverte.";
-        //autrement la station sélectionnée est fermée et le second message apparait :
-    } else {
-        statusStationElt.textContent = "Elle est actuellement fermée.";
-    }
-    bikestandsStationElt.textContent = stations.bikestands + " points d'attache opérationnels.";
-    availableBikeStandsStationElt.textContent = stations.availableBikeStands + " points d'attache disponibles pour y ranger un vélo.";
-    availableBikesStationElt.textContent = stations.availableBikes + "  vélos disponibles et opérationnels.";
-
-    if (stations.availableBikes === 0 || stations.status != "OPEN") {
-        bookingButtonElt.disabled = true;
-    } else {
-        bookingButtonElt.disabled = false;
-    }
-
-}
-
 //-----------------------fonction pour le compte à rebour :
 
-function countdown() {
+function countdown(bibi) {
 
     if (time <= 0) {
         clearInterval(counter);
     }
 
-   let minutes = Math.floor((time % 3600) / 60);
-   let secondes = time % 60;
+    let minutes = Math.floor((time % 3600) / 60);
+    let secondes = time % 60;
 
     countDownElt.textContent = minutes + " minute(s) " + secondes + " secondes(s)";
 
     time--;
+
 }
 
 function startCountdown() {
     countdown();
     counter = setInterval("countdown()", 1000);
+
 }
 
 
-
-//----------------------------------------function pour accéder à la réservation :
-function booking() {
-
-    //Déclaration et ajout dans le main wrapper d'un formulaire contenant le canvas :
-
-    formElt.id = "form_canvas";
-    mainWrapperElt.insertBefore(formElt, containerCountDownElt);
-
-    //Déclaration et ajout de deux champs pour renseigner le prénom et le nom de l'utilisateur :
-    const firtsNameElt = document.createElement("label");
-    firtsNameElt.id = "first_name";
-    firtsNameElt.textContent = "Prénom : ";
-
-    firtsNameElt.appendChild(inputFirstNameElt);
-    formElt.appendChild(firtsNameElt);
-
-    const lastNameElt = document.createElement("label");
-    lastNameElt.id = "last_name";
-    lastNameElt.textContent = "Nom : ";
-
-    lastNameElt.appendChild(inputLastNameElt);
-    formElt.appendChild(lastNameElt);
-
-    //Déclaration et ajout d'un paragraphe pour cibler la zone de signature pour l'utilisateur :
-    const titleSignatureElt = document.createElement("p");
-    titleSignatureElt.id = "title_signature";
-    titleSignatureElt.textContent = "Signature :";
-    formElt.appendChild(titleSignatureElt);
-
-    //ajout d'attribut pour le canvas :
-    canvas.setAttribute('width', "250px");
-    canvas.setAttribute('height', "150px");
-    canvas.setAttribute('id', 'canvas');
-    //ajout du canvas :
-    formElt.appendChild(canvas);
-
-    //ajout des boutons valider et effacer :
-    formElt.appendChild(validButtonElt);
-    formElt.appendChild(clearButtonElt);
-
-};
 
 //---------------------------------fonctions pour le canvas :
 
@@ -319,7 +204,11 @@ function initMap(data) {
         //------------ajout de l'event quand l'utilisateur click sur un marqueur :
         marker.addListener('click', function() {
             //la div "info_stations" apparait quand l'utilisateur click sur un marqueur :
-            divInfoStation(stations);
+            const infoStation = new Station();
+
+            infoStation.divInfoStation(stations);
+
+            //var nameStation = stations.name;
         });
 
 
@@ -345,7 +234,10 @@ function initMap(data) {
 
 bookingButtonElt.addEventListener("click", function() {
 
-booking();
+
+ const createBooking = new Booking();
+    createBooking.booking();
+
 
 });
 
@@ -403,10 +295,6 @@ clearButtonElt.addEventListener("mousedown", function(e) {
 
 
 
-
-
-var signature = canvas.toDataURL("image/png");
-
 //function teste :
 /*function validateBooking(e) {
     if (validCanvas === true && valueFirstName != null && valueLastName != null) {
@@ -421,26 +309,47 @@ var signature = canvas.toDataURL("image/png");
     }
 }*/
 
-function validBooking (){
-     if (validCanvas === true){
-        startCountdown();
-        stations.availableBikes --;
-    } else {
-        alert("blabla");
+function validBooking() {
+    var dateBooking = new Date();
+
+        var nom = inputLastNameElt.value;
+        var prenom = inputFirstNameElt.value;
+        var signature = canvas.toDataURL("image/png");
+        var validUser = new User(nom, prenom, signature);
+        console.log(validUser);
+
+    if (validCanvas === true) {
+        //sessionStorage.setItem("station", nameStation);
+        sessionStorage.setItem("user_firstName", prenom);
+        sessionStorage.setItem("user_lastName", nom);
+        sessionStorage.setItem("signature", signature);
+        sessionStorage.setItem("booking_status", true);
+        sessionStorage.setItem("date_booking", dateBooking);
+
+       startCountdown();
+           } else {
+         alert("blabla");
     }
 }
+
+
+
 //---------------ajout d'un event sur le bouton valider :
-var validLastName = inputLastNameElt.value;
-var validFirstName = inputFirstNameElt.value;
+
+var storageStation = sessionStorage.getItem('station');
+var storageUserFirstName = sessionStorage.getItem('user_firstName');
+var storageUserFirstName = sessionStorage.getItem('user_lastName');
+var storageStatusBooking = sessionStorage.getItem('booking_status');
+var storageDateBooking = sessionStorage.getItem('date_booking');
+
+
+
 
 validButtonElt.addEventListener("click", function() {
 
-validBooking();
-
-});
 
 
-/*var userCreate = new User();
-
-sessionStorage.setItem("user", userCreate);
-sessionStorage.setItem("signature", signature);*/
+    validBooking();
+    })
+    //sessionStorage.setItem("user", userCreate);
+    //sessionStorage.setItem("signature", signature);*/
