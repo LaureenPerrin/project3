@@ -38,7 +38,8 @@ booking() {
     //ajout d'attribut pour le canvas :
     canvas.setAttribute('width', "250px");
     canvas.setAttribute('height', "150px");
-    canvas.setAttribute('id', 'canvas');
+    canvas.setAttribute("class", "signature-pad");
+    canvas.setAttribute("id", "signature-pad");
     //ajout du canvas :
     formElt.appendChild(canvas);
 
