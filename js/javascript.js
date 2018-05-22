@@ -64,6 +64,7 @@ mainWrapperElt.insertBefore(containerCountDownElt, footerElt);
 var stationsArray = [];
 
 
+
 //_______________________________________________________________appel AJAX:
 fetch('https://cors-anywhere.herokuapp.com/https://api.jcdecaux.com/vls/v1/stations?contract=lyon&apiKey=b9eae55b32f61852fc6a740a3867d131bb01dd37')
     .then(infosStations => infosStations.json())
@@ -80,11 +81,10 @@ fetch('https://cors-anywhere.herokuapp.com/https://api.jcdecaux.com/vls/v1/stati
 //---------------------fonction pour déclarer le tableau des stations :
 function displayStations(stations) {
     //Déclaration de l'objet station et du tableau stationsArray :
-    stationsArray = stations.map(station => new Station(station.name, station.address, station.banking, station.position, station.status, station.bike_stands, station.available_bike_stands, station.available_bikes));
-    console.log(stationsArray);
+     stationsArray = stations.map(station => new Station(station.name, station.address, station.banking, station.position, station.status, station.bike_stands, station.available_bike_stands, station.available_bikes));
+    //console.log(stationsArray);
     return stationsArray;
 }
-
 
 
 //--------------------------------fonction pour les images des marqueurs :
@@ -118,30 +118,6 @@ function createInput(id, type, value) {
     return inputCanvasElt;
 }
 
-//-----------------------fonction pour le compte à rebour :
-
-/*function countdown(bibi) {
-
-    if (time <= 0) {
-        clearInterval(counter);
-    }
-
-    let minutes = Math.floor((time % 3600) / 60);
-    let secondes = time % 60;
-
-    countDownElt.textContent = minutes + " minute(s) " + secondes + " secondes(s)";
-
-    time--;
-
-}
-
-function startCountdown() {
-    countdown();
-    counter = setInterval("countdown()", 1000);
-
-}*/
-
-//-----function pour déclarer, ajouter et créer des event sur la google map et les marqueurs,:
 
 function initMap(data) {
     //Déclaration et ajout de la google map :

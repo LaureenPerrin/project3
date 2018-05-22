@@ -5,13 +5,13 @@
 }*/
 var timeInMinutes = 20;
 sessionStorage.getItem('date');
-var countDownDate = new Date((Date.parse(sessionStorage.getItem('date'))) + timeInMinutes * 60 * 1000);
+var countDownDate = new Date((Date.parse(sessionStorage.getItem('date'))) + timeInMinutes * 60 * 1001);
 
 
 
-function myTimer() {
+function myTimer(){
 
-  var now = new Date().getTime();
+  var now = Date.parse(new Date());
 
   // Find the distance between now an the count down date
   var distance = countDownDate - now;
@@ -21,15 +21,20 @@ function myTimer() {
   var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
   // Display the result in the element with id="demo"
-  if (distance > 1) {
+  if (distance > 0) {
     document.getElementById("count_down").textContent = "Votre réservation expirera dans " + minutes + " minute(s) " + "et " + seconds + " seconde(s). ";
     messageNoBookingElt.style.display = "none";
-    messageValidBookingElt.textContent = "Vous avez réservez un vélo à la station " + ".";
+    messageValidBookingElt.textContent = "Vous avez réservez un vélo à la station " + "" + ".";
   }
   // If the count down is finished, write some text 
   if (distance < 0) {
     clearInterval(myVar);
-    document.getElementById("count_down").innerHTML = "EXPIRED";
+    document.getElementById("count_down").textContent = "Votre réservation a expiré.";
+    setTimeout (function(){
+      document.getElementById("count_down").textContent = "";
+      messageNoBookingElt.style.display = "";
+      },3000);
+    
   }
 
 }
