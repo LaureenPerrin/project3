@@ -2,7 +2,7 @@
 
 
 //__________________________________________________Déclarations des const utilisées dans le programme:
-var storage = window.sessionStorage;
+var storage = sessionStorage;
 const mainWrapperElt = document.getElementById("main_wrapper");
 
 const headerElt = document.querySelector("header");
@@ -34,16 +34,30 @@ const inputFirstNameElt = createInput("input_first_name", "text", "");
 const inputLastNameElt = createInput("input_last_name", "text", "");
 
 //Déclaration et ajout des bouttons valider et effacer :
-const validButtonElt = createInput("valid_button", "button", "Valider");
+const validButtonElt = createInput("valid_button", "submit", "Valider");
 const clearButtonElt = createInput("clear_button", "button", "Effacer");
 
-//Déclaration du compte à rebour :
-const containerCountDownElt = document.getElementById("container_countdown");
-const countDownElt = document.getElementById("count_down");
-let time = 1200;
-let counter;
-
 const footerElt = document.querySelector("footer");
+//Déclaration du compte à rebour :
+const containerCountDownElt = document.createElement("div");
+containerCountDownElt.id = "container_count_down";
+
+const countDownElt = document.createElement("p");
+countDownElt.id = "count_down";
+
+const messageNoBookingElt = document.createElement("p");
+messageNoBookingElt.id = "message_no_booking";
+messageNoBookingElt.textContent = "Aucune réservation.";
+
+const messageValidBookingElt = document.createElement("p");
+messageValidBookingElt.id = "message_valid_booking";
+
+containerCountDownElt.appendChild(messageNoBookingElt);
+containerCountDownElt.appendChild(messageValidBookingElt);
+containerCountDownElt.appendChild(countDownElt);
+
+mainWrapperElt.insertBefore(containerCountDownElt, footerElt);
+
 var stationsArray = [];
 
 
@@ -61,7 +75,7 @@ fetch('https://cors-anywhere.herokuapp.com/https://api.jcdecaux.com/vls/v1/stati
 
 
 //---------------------fonction pour déclarer le tableau des stations :
-function displayStations (stations) {
+function displayStations(stations) {
     //Déclaration de l'objet station et du tableau stationsArray :
     stationsArray = stations.map(station => new Station(station.name, station.address, station.banking, station.position, station.status, station.bike_stands, station.available_bike_stands, station.available_bikes));
     console.log(stationsArray);
@@ -103,7 +117,7 @@ function createInput(id, type, value) {
 
 //-----------------------fonction pour le compte à rebour :
 
-function countdown(bibi) {
+/*function countdown(bibi) {
 
     if (time <= 0) {
         clearInterval(counter);
@@ -122,7 +136,7 @@ function startCountdown() {
     countdown();
     counter = setInterval("countdown()", 1000);
 
-}
+}*/
 
 //-----function pour déclarer, ajouter et créer des event sur la google map et les marqueurs,:
 
@@ -137,7 +151,7 @@ function initMap(data) {
     });
 
     //Boucle qui parcours les stations de Lyon afin d'ajouter un marqueur par station sur la google map :
-    data.forEach(function(stations) {
+    data.forEach(function (stations) {
 
         //Déclaration et ajout de l'objet marqueur :
         const marker = new google.maps.Marker({
@@ -147,7 +161,7 @@ function initMap(data) {
         });
 
         //------------ajout de l'event quand l'utilisateur click sur un marqueur :
-        marker.addListener('click', function() {
+        marker.addListener('click', function () {
             //la div "info_stations" apparait quand l'utilisateur click sur un marqueur :
             const infoStation = new Station();
             infoStation.divInfoStation(stations);
@@ -173,64 +187,95 @@ function initMap(data) {
 
 //--------ajout de l'event quand l'utilisateur click sur le bouton réserver :
 
-bookingButtonElt.addEventListener("click", function() {
-
+bookingButtonElt.addEventListener("click", function () {
     const createBooking = new Booking();
     createBooking.booking();
+});
+
+//---------------ajout d'un event sur le bouton effacer :
+
+clearButtonElt.addEventListener("click", function () {
+    signaturePad.clear();
+});
+
+//---------------ajout d'un event sur le bouton valider :
+//var nom = inputLastNameElt.value;
+//var prenom = inputFirstNameElt.value;
+var signature = signaturePad.toDataURL('image/png');
+var sessionDate;
+var myVar;
+validButtonElt.addEventListener("click", function (e) {
+    //est ce vraiment necéssaire :
+    /*if (sessionStorage.length >= 1){
+        sessionStorage.clear();
+        
+    }*/
+
+    if (signaturePad.isEmpty() === true) {
+        e.preventDefault();
+        return alert("blabla");
+
+    } else {
+        //station.availableBikes--;
+        var dateBooking = new Date();
+        sessionStorage.setItem("prénom", inputFirstNameElt.value);
+        sessionStorage.setItem("nom", inputLastNameElt.value);
+        sessionStorage.setItem("signature", signature);
+        sessionStorage.setItem("date", dateBooking);
+        //sessionStorage.setItem('station', stations.station.name);
+        //sessionStorage.setItem('availables', stations.availableBikes);
+        sessionStorage.setItem("booking_status", true);
+
+
+        //Valeur du storage dans variable globales
+        //var sessionStation = sessionStorage.getItem("station");
+        sessionStorage.getItem("date");
+
+        //messageBookingElt.createTextNode("Vous avez réservé un vélo à la station : "); //+ storage.station;
+        //Démarrage du compte à rebour
+        myVar;
+
+    }
+
 
 });
 
 
-/*function validateBooking(e) {
-    if (validCanvas === true && valueFirstName != null && valueLastName != null) {
 
-        sessionStorage.setItem("firstName", valueFirstName);
-        sessionStorage.setItem("lastName", valueLastName);
-        sessionStorage.setItem("signature", signature);
+/*var nom = inputLastNameElt.value;
+var prenom = inputFirstNameElt.value;
+var signature = signaturePad.toDataURL('image/png');
+var sessionDate;
 
-    } else if (validCanvas === false) {
-        alert("Veullez signer !")
-        e.preventDefault();
+validButtonElt.addEventListener("click", function (e) {
+    if (sessionStorage.length >= 1) {
+        sessionStorage.clear();
     }
-}*/
+    else if (inputFirstNameElt.value !== null && inputFirstNameElt.value!== null && signaturePad.isEmpty()) {
+        //station.availableBikes--;
+        var dateBooking = new Date();
 
-function validBooking() {
-    var dateBooking = new Date();
-
-        var nom = inputLastNameElt.value;
-        var prenom = inputFirstNameElt.value;
-        var signature = signaturePad.toDataURL('image/png');
-        var validUser = new User(nom, prenom, signature);
-        console.log(validUser);
-
-      if (signaturePad.isEmpty()) {
-    return alert("Please provide a signature first.");
-  }
-        else if (signaturePad.isEmpty() === true) {//sessionStorage.setItem("station", nameStation);
-        sessionStorage.setItem("user_firstName", prenom);
-        sessionStorage.setItem("user_lastName", nom);
+        //sessionStorage.setItem("date", dateBooking);
+        //sessionStorage.setItem('station', stations.station.name);
+        //sessionStorage.setItem('availables', stations.availableBikes);
+        sessionStorage.setItem("user_firstName", inputFirstNameElt.value);
+        sessionStorage.setItem("user_lastName", inputLastNameElt.value);
         sessionStorage.setItem("signature", signature);
         sessionStorage.setItem("booking_status", true);
-        sessionStorage.setItem("date_booking", dateBooking);
+       
 
-       startCountdown();
+        //Valeur du storage dans variable globales
+        var sessionStation = sessionStorage.getItem("station");
+        var sessionDate = sessionStorage.getItem("date");
+        countDownElt.textContent = "Vous avez réservé un vélo à la station : " + storage.station;
+        //Démarrage du compte à rebour
+        initializeClock('count_down', deadline);
+        
     }
-}
+    //si absence de signature et qu'aucune resa n'est en cours
+    else if (signaturePad.isEmpty() === true) {
+        return alert("signature manquante");
+    }
+});*/
 
 
-
-//---------------ajout d'un event sur le bouton valider :
-
-var storageStation = sessionStorage.getItem('station');
-var storageUserFirstName = sessionStorage.getItem('user_firstName');
-var storageUserFirstName = sessionStorage.getItem('user_lastName');
-var storageStatusBooking = sessionStorage.getItem('booking_status');
-var storageDateBooking = sessionStorage.getItem('date_booking');
-
-
-
-
-validButtonElt.addEventListener("click", function() {
-    validBooking();
-    })
-    

@@ -15,7 +15,7 @@ class Station {
 
     //---------------------------------méthode pour créer la div infoStation :
     divInfoStation(stations) {
-        infoStationsElt.style.display = "";
+        infoStationsElt.style.display = "block";
         infoStationsElt.style.display = "flex";
         nameStationElt.textContent = "Station : " + stations.name;
         addressStationElt.textContent = "Adresse : " + stations.address;
@@ -51,8 +51,8 @@ class Station {
 
     }
 
-    availableBikesChange(stations){
-        stations.availableBikes-=1;
+    availableBikesChange(stations) {
+        stations.availableBikes -= 1;
     }
 
 }
