@@ -3,6 +3,7 @@
 
 //__________________________________________________Déclarations des const utilisées dans le programme:
 var storage = sessionStorage;
+
 const mainWrapperElt = document.getElementById("main_wrapper");
 
 const headerElt = document.querySelector("header");
@@ -38,6 +39,7 @@ const validButtonElt = createInput("valid_button", "submit", "Valider");
 const clearButtonElt = createInput("clear_button", "button", "Effacer");
 
 const footerElt = document.querySelector("footer");
+
 //Déclaration du compte à rebour :
 const containerCountDownElt = document.createElement("div");
 containerCountDownElt.id = "container_count_down";
@@ -58,6 +60,7 @@ containerCountDownElt.appendChild(countDownElt);
 
 mainWrapperElt.insertBefore(containerCountDownElt, footerElt);
 
+//Déclaration tableau des stations :
 var stationsArray = [];
 
 
@@ -199,10 +202,9 @@ clearButtonElt.addEventListener("click", function () {
 });
 
 //---------------ajout d'un event sur le bouton valider :
-//var nom = inputLastNameElt.value;
-//var prenom = inputFirstNameElt.value;
-var signature = signaturePad.toDataURL('image/png');
-var sessionDate;
+
+
+
 var myVar;
 validButtonElt.addEventListener("click", function (e) {
     //est ce vraiment necéssaire :
@@ -237,45 +239,7 @@ validButtonElt.addEventListener("click", function (e) {
 
     }
 
-
 });
 
-
-
-/*var nom = inputLastNameElt.value;
-var prenom = inputFirstNameElt.value;
-var signature = signaturePad.toDataURL('image/png');
-var sessionDate;
-
-validButtonElt.addEventListener("click", function (e) {
-    if (sessionStorage.length >= 1) {
-        sessionStorage.clear();
-    }
-    else if (inputFirstNameElt.value !== null && inputFirstNameElt.value!== null && signaturePad.isEmpty()) {
-        //station.availableBikes--;
-        var dateBooking = new Date();
-
-        //sessionStorage.setItem("date", dateBooking);
-        //sessionStorage.setItem('station', stations.station.name);
-        //sessionStorage.setItem('availables', stations.availableBikes);
-        sessionStorage.setItem("user_firstName", inputFirstNameElt.value);
-        sessionStorage.setItem("user_lastName", inputLastNameElt.value);
-        sessionStorage.setItem("signature", signature);
-        sessionStorage.setItem("booking_status", true);
-       
-
-        //Valeur du storage dans variable globales
-        var sessionStation = sessionStorage.getItem("station");
-        var sessionDate = sessionStorage.getItem("date");
-        countDownElt.textContent = "Vous avez réservé un vélo à la station : " + storage.station;
-        //Démarrage du compte à rebour
-        initializeClock('count_down', deadline);
-        
-    }
-    //si absence de signature et qu'aucune resa n'est en cours
-    else if (signaturePad.isEmpty() === true) {
-        return alert("signature manquante");
-    }
-});*/
 
 

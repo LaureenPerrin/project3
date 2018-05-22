@@ -9,7 +9,7 @@ var signaturePad = new SignaturePad(canvas, {
     backgroundColor: 'rgb(255, 255, 255)' // necessary for saving image as JPEG; can be removed is only saving as PNG or SVG
 });
 
-
+var signature = signaturePad.toDataURL('image/png');
 
 
 
