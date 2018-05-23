@@ -11,15 +11,14 @@ class Station {
         this.availableBikes = availableBikes;
     }
 
-
-
     //---------------------------------méthode pour créer la div infoStation :
-    divInfoStation(stations) {
+    divInfoStation(station) {
+
         infoStationsElt.style.display = "block";
         infoStationsElt.style.display = "flex";
-        nameStationElt.textContent = "Station : " + stations.name;
-        addressStationElt.textContent = "Adresse : " + stations.address;
-        bankingStationElt.textContent = stations.banking;
+        nameStationElt.textContent = "Station : " + station.name;
+        addressStationElt.textContent = "Adresse : " + station.address;
+        bankingStationElt.textContent = station.banking;
 
         //si bankingStationElt égal à true alors la station sélectionnée a un terminal de paiement et le premier message apparait :
         if (bankingStationElt.textContent) {
@@ -29,7 +28,7 @@ class Station {
             bankingStationElt.textContent = "Cette station n'a pas de terminal de paiement.";
         }
 
-        statusStationElt.textContent = stations.status;
+        statusStationElt.textContent = station.status;
 
         //si statusStationElt est égal à open alors la station sélectionnée est ouverte et le premier message apparait :
         if (statusStationElt.textContent === "open") {
@@ -38,21 +37,20 @@ class Station {
         } else {
             statusStationElt.textContent = "Elle est actuellement fermée.";
         }
-        bikestandsStationElt.textContent = stations.bikestands + " points d'attache opérationnels.";
-        availableBikeStandsStationElt.textContent = stations.availableBikeStands + " points d'attache disponibles pour y ranger un vélo.";
-        availableBikesStationElt.textContent = stations.availableBikes + "  vélos disponibles et opérationnels.";
 
+        bikestandsStationElt.textContent = station.bikestands + " points d'attache opérationnels.";
+        availableBikeStandsStationElt.textContent = station.availableBikeStands + " points d'attache disponibles pour y ranger un vélo.";
+        availableBikesStationElt.textContent = station.availableBikes + "  vélos disponibles et opérationnels.";
 
-        if (stations.availableBikes === 0 || stations.status !== "OPEN") {
+        //Si 0 vélo de disponible dans la station ou que celle-ci est fermée alors l'utilisateur ne peux pas appuyer sur le bouton valider et donc réserver un vélo :
+        if (station.availableBikes === 0 || station.status !== "OPEN") {
             bookingButtonElt.disabled = true;
         } else {
+            //Sinon l'utilisateur peut appuyer sur le bouton valider :
             bookingButtonElt.disabled = false;
         }
 
     }
 
-    availableBikesChange(stations) {
-        stations.availableBikes -= 1;
-    }
 
 }

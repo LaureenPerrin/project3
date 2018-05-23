@@ -1,50 +1,125 @@
+
+//---------------------Class Timer pour la reservation de vélo :
+
 /*class Timer {
-    constructor(){
-        
+  constructor(timeInMinutes, dateStart) {
+    this.timeInMinutes = timeInMinutes;
+    this.dateStart = dateStart;
+    this.countDownDate = new Date((Date.parse(this.dateStart)) + this.timeInMinutes * 60 * 1001);
+
+  }
+
+//Méthode qui créé le timer :
+  myTimer() {
+    var self = this;
+    var now = Date.parse(new Date());
+
+    // Distance entre now et countDownDate :
+    var distance = this.countDownDate - now;
+
+    // Calcul des minutes et secondes :
+    var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+    // Affiche le timer : 
+    if (distance > 0) {
+      messageValidBookingElt.textContent = "Vous avez réservez un vélo à la station " + "" + ".";
+      document.getElementById("count_down").textContent = "Votre réservation expirera dans " + minutes + " minute(s) " + "et " + seconds + " seconde(s). ";
+      messageNoBookingElt.style.display = "none";
+
     }
+    
+    // quand le timer est terminé :
+    else if (distance < 0) {
+      clearInterval(myVar);
+      document.getElementById("count_down").textContent = "Votre réservation a expiré.";
+      
+      setTimeout(function () {
+        document.getElementById("count_down").textContent = "";
+        messageNoBookingElt.style.display = "";
+        messageValidBookingElt.style.display = "none";
+      }, 3000);
+
+    }
+  }
+
+  //Méthode pour lancer le timer :
+  exeTimer() {
+    var self = this;
+    var myVar = setInterval(this.myTimer, 1000);
+    return myVar;
+  }
+
 }*/
+
+//var qui définit le temps du timer :
 var timeInMinutes = 20;
-sessionStorage.getItem('date');
-var countDownDate = new Date((Date.parse(sessionStorage.getItem('date'))) + timeInMinutes * 60 * 1001);
+//Date au moment du click sur la réservation :
+sessionStorage.getItem('date');//dateStart
+//var qui définit une date d'arrêt du timer :
+var countDownDate = new Date((Date.parse(sessionStorage.getItem('date'))) + timeInMinutes * 60 * 1001);//
 
 
 
-function myTimer(){
+function myTimer() {
 
   var now = Date.parse(new Date());
 
-  // Find the distance between now an the count down date
+  // Distance entre now et countDownDate permettant de faire le décompte du timer:
   var distance = countDownDate - now;
 
   // Calcul des minutes et secondes :
   var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
   var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-  // Display the result in the element with id="demo"
+  // Affiche le timer :
   if (distance > 0) {
+    messageValidBookingElt.textContent = "Vous avez réservé un vélo à la station " + sessionStorage.getItem("station") + ".";
     document.getElementById("count_down").textContent = "Votre réservation expirera dans " + minutes + " minute(s) " + "et " + seconds + " seconde(s). ";
     messageNoBookingElt.style.display = "none";
-    messageValidBookingElt.textContent = "Vous avez réservez un vélo à la station " + "" + ".";
+
   }
-  // If the count down is finished, write some text 
-  if (distance < 0) {
+  // quand le timer est terminé :
+  else if (distance < 0) {
     clearInterval(myVar);
     document.getElementById("count_down").textContent = "Votre réservation a expiré.";
-    setTimeout (function(){
+    setTimeout(function () {
+
       document.getElementById("count_down").textContent = "";
-      messageNoBookingElt.style.display = "";
-      },3000);
-    
+      messageNoBookingElt.style.display = "block";
+      messageValidBookingElt.style.display = "none";
+
+    }, 3000);
+    sessionStorage.clear();
+
   }
 
 }
+
+//lancement du timer : 
 var myVar = setInterval(myTimer, 1000);
 
-/*var timeInMinutes = 20;
-//var currentTime = Date.parse(new Date());
-sessionStorage.getItem('date');
-var deadline = new Date((Date.parse(sessionStorage.getItem('date'))) + timeInMinutes*60*1001);
 
+
+
+
+
+
+
+
+
+
+//Deuxième façon de faire le timer :
+
+/*
+//var qui définit le temps du timer :
+var timeInMinutes = 20;
+//Date au moment du click sur la réservation :
+sessionStorage.getItem('date');//dateStart
+//var qui définit une date d'arrêt du timer :
+var countDownDate = new Date((Date.parse(sessionStorage.getItem('date'))) + timeInMinutes * 60 * 1001);//
+
+//fonction qui calcule le timer :
 function getTimeRemaining(endtime){
   var t = Date.parse(endtime) - Date.parse(new Date());
   //convertion des millisecondes :
@@ -57,6 +132,7 @@ function getTimeRemaining(endtime){
   };
 }
 
+//fonction utilisée pour lancer le timer : 
 function initializeClock(id, endtime){
   var clock = document.getElementById(id);
   var timeinterval = setInterval(function(){
@@ -70,4 +146,3 @@ function initializeClock(id, endtime){
   
 }
 initializeClock('count_down', deadline);*/
-

@@ -8,6 +8,6 @@ class User {
 };
 
 
-var user1 = new User("bibi", "baba", "bubu");
+
 
 

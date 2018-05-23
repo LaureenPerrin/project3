@@ -6,7 +6,7 @@ class Booking {
         this.user = User;
     }
 
-    //----------------------------------------méthode pour accéder à la réservation :
+    //méthode pour accéder à la réservation :
     booking() {
 
         //Déclaration et ajout dans le main wrapper d'un formulaire contenant le canvas :
@@ -40,6 +40,7 @@ class Booking {
         canvas.setAttribute('height', "150px");
         canvas.setAttribute("class", "signature-pad");
         canvas.setAttribute("id", "signature-pad");
+
         //ajout du canvas :
         formElt.appendChild(canvas);
 
@@ -49,8 +50,9 @@ class Booking {
 
     };
 
+
 }
 
-//var booking1 = new Booking("true", user1);
+
 
 
