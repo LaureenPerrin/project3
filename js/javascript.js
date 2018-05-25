@@ -28,14 +28,14 @@ const availableBikesStationElt = document.getElementById("available_bikes_statio
 const bookingButtonElt = document.getElementById("booking_button");
 
 //déclaration du formulaire de réservation :
-const formElt = document.createElement("form");
+const formElt = document.getElementById("form_canvas");
 
-const inputFirstNameElt = createInput("input_first_name", "text", "");
-const inputLastNameElt = createInput("input_last_name", "text", "");
+const inputFirstNameElt = document.getElementById("input_first_name");
+const inputLastNameElt = document.getElementById("input_last_name");
 
 //Déclaration et ajout des bouttons valider et effacer :
-const validButtonElt = createInput("valid_button", "submit", "Valider");
-const clearButtonElt = createInput("clear_button", "button", "Effacer");
+const validButtonElt = document.getElementById("valid_button");
+const clearButtonElt = document.getElementById("clear_button");
 
 const footerElt = document.querySelector("footer");
 
@@ -99,10 +99,10 @@ function iconMarker(station) {
         return "images/iconlyon_vert.png";
     //si les stations sont ouvertes alors les marqueurs sont rouges :
     } else if (station.status === "OPEN") {
-        return 'images/iconelyon.png';
+        return "images/iconelyon.png";
     }
     //Dans les autres cas les marqueurs sont bleus :
-    return "images/iconelyon_bleu.png";
+    return "images/iconlyon_bleu.png";
 }
 
 /* ce que j'avais fait de mon côté qui ne fonctionnait pas :
@@ -167,11 +167,12 @@ function initMap(data) {
                 /*if (sessionStorage.length >= 1){
                     sessionStorage.clear();  
                 }*/
-
+                //Si l'utilisateur n'a pas signé alors une fenêtre apparait avec le message suivant :
                 if (signaturePad.isEmpty() === true) {
                     e.preventDefault();
-                    return alert("blabla");
-
+                    return alert("Veuillez signer s'il vous plaît !");
+                    
+                //Sinon la réservation peut se faire :
                 } else {
                     //Création d'un var dateBooking pour calculer le compte à rebour :
                     var dateBooking = new Date();
@@ -225,12 +226,12 @@ function initMap(data) {
 //--------ajout de l'event quand l'utilisateur click sur le bouton réserver :
 
 bookingButtonElt.addEventListener("click", function () {
-
+    
     //Instanciation de l'objet createBooking avec la class Booking :
     const createBooking = new Booking();
     //Appel de la méthode booking de l'objet createBooking pour faire apparaitre le formulaire de réservation :
     createBooking.booking();
-
+    
 });
 
 //---------------ajout d'un event sur le bouton effacer :

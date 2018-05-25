@@ -110,6 +110,24 @@
             <input id="booking_button" type="button" value="Réserver">
         </div>
 
+        <form id="form_canvas">
+            <label id="first_name">Prénom :
+                <input id="input_first_name" required="required" type="text">
+            </label>
+
+            <label id="last_name">Nom :
+                <input id="input_last_name" required="required" type="text">
+            </label>
+
+            <p id="title_signature">Signature :</p>
+
+            <canvas class="signature-pad" id="signature-pad"></canvas>
+            
+            <input id="valid_button" value="Valider" required="required" type="submit">
+            <input id="clear_button" value="Effacer" required="required" type="button">
+        </form>
+
+
         <footer>
             <p>2018 - Application web factice développée par Laureen Perrin pour l'établissement OpenClassRooms</p>
         </footer>

@@ -1,5 +1,5 @@
 //Déclaration et ajout du canvas pour que l'utilisateur puisse signer :
-const canvas = document.createElement('canvas');
+var canvas = document.getElementById("signature-pad");
 
 //Déclaration du context du canvas :
 var ctx = canvas.getContext("2d");
@@ -8,8 +8,7 @@ var ctx = canvas.getContext("2d");
 var signaturePad = new SignaturePad(canvas, {
     minWidth: 5,
     maxWidth: 5,
-    penColor: " rgb (66, 133, 244) ",
-    backgroundColor: 'rgb(255, 255, 255)'
+    penColor: " rgb(0, 0, 0) ",
 });
 
 //var qui récupère les valeurs dessinées dans le canvas et qui sont convertient en image png :

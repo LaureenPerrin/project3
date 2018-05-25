@@ -163,25 +163,31 @@ margin-top: 15px;
 height: 400px;
 width: 300px;
 border: 1px solid black;
-display: flex;
-flex-direction: column;
-align-items: center;
 margin: auto;
-margin-top: auto;
 padding-bottom: 10px;
 padding-top: 15px;
 border-radius: 3px;
 box-shadow: 1px 1px 12px #555;
 margin-top: 15px;
-
+display: none;
+padding-top: 40px;
 }
 
-label#last_name {
-  margin: auto;
+#first_name {
+  justify-content: center;
+  display: flex;
+  margin-bottom: 20px;
 }
 
-label#first_name {
-  margin: auto;
+#last_name {
+  justify-content: center;
+  display: flex;
+  margin-bottom: 35px;
+}
+
+#title_signature {
+  justify-content: center;
+  display: flex;
 }
 
 input#input_first_name {
@@ -192,17 +198,25 @@ input#input_last_name {
   border: 1px solid black;
 }
 
-p#title_signature {
-  margin: 0px;
-}
-
 canvas {
+  width: 250px;
+  height: 150px;
   border: 1px solid black;
   margin-bottom: 60px;
   display: flex;
   margin: auto;
+  margin-bottom: 20px;
 }
 
+#valid_button {
+  margin: auto;
+  display: flex;
+}
+
+#clear_button {
+  margin: auto;
+  display: flex;
+}
 
 /*_____________________________________compteur_____________________________________*/
 
