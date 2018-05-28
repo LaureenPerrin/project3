@@ -1,10 +1,11 @@
-//Déclaration et ajout du canvas pour que l'utilisateur puisse signer :
+
+//Déclaration du canvas pour que l'utilisateur puisse signer :
 var canvas = document.getElementById("signature-pad");
 
 //Déclaration du context du canvas :
 var ctx = canvas.getContext("2d");
 
-//Instanciation de l'objet signaturePad avec la class SignaurePad :
+//Instanciation de l'objet signaturePad avec la class SignaturePad :
 var signaturePad = new SignaturePad(canvas, {
     minWidth: 5,
     maxWidth: 5,

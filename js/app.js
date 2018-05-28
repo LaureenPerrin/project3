@@ -1,23 +1,24 @@
 "use strict"
 
+//__________________________________________________Déclarations des const utilisées dans le programme :
 
-//__________________________________________________Déclarations des const utilisées dans le programme:
-
+//Déclaration du mainWrapper :
 const mainWrapperElt = document.getElementById("main_wrapper");
 
+//Déclaration de la header :
 const headerElt = document.querySelector("header");
 
+//Déclaration de la div contenant le slider :
 const sliderElt = document.querySelector("slider_container");
 
-//tableau des marqueurs :
+//Déclaration du tableau des marqueurs :
 const markers = [];
 
-//google map :
+//Déclaration de la div de la google map :
 const mapZoneElt = document.querySelector("map");
 
-//la div d'informations sur les stations :
+//Déclaration de la div d'informations sur les stations et les éléments quelle comporte :
 const infoStationsElt = document.getElementById("info_stations");
-
 const nameStationElt = document.getElementById("name_station");
 const addressStationElt = document.getElementById("address_station");
 const bankingStationElt = document.getElementById("banking_station");
@@ -27,16 +28,18 @@ const availableBikeStandsStationElt = document.getElementById("available_bike_st
 const availableBikesStationElt = document.getElementById("available_bikes_station");
 const bookingButtonElt = document.getElementById("booking_button");
 
-//déclaration du formulaire de réservation :
+//Déclaration du formulaire de réservation :
 const formElt = document.getElementById("form_canvas");
 
+//Déclaration des inputs du formulaire :
 const inputFirstNameElt = document.getElementById("input_first_name");
 const inputLastNameElt = document.getElementById("input_last_name");
 
-//Déclaration et ajout des bouttons valider et effacer :
+//Déclaration des bouttons valider et effacer :
 const validButtonElt = document.getElementById("valid_button");
 const clearButtonElt = document.getElementById("clear_button");
 
+//Déclaration du footer :
 const footerElt = document.querySelector("footer");
 
 //Déclaration de la div qui contient le compte à rebour :
@@ -56,48 +59,41 @@ messageNoBookingElt.textContent = "Aucune réservation.";
 const messageValidBookingElt = document.createElement("p");
 messageValidBookingElt.id = "message_valid_booking";
 
-//Ajout des différents éléments cités au dessus :
+//Ajout des différents éléments cités au dessus dans l'élément containerCountDownElt :
 containerCountDownElt.appendChild(messageNoBookingElt);
 containerCountDownElt.appendChild(messageValidBookingElt);
 containerCountDownElt.appendChild(countDownElt);
 
+//Ajout de l'élément containerCountDownElt dans l'élément mainWrapperElt avant son élément enfant footerElt :
 mainWrapperElt.insertBefore(containerCountDownElt, footerElt);
 
-//Déclaration d'un tableau des stations :
-var stationsArray = [];
+//_______________________________________________________________Appel AJAX:
 
-
-
-
-
-//_______________________________________________________________appel AJAX:
-fetch('https://cors-anywhere.herokuapp.com/https://api.jcdecaux.com/vls/v1/stations?contract=lyon&apiKey=b9eae55b32f61852fc6a740a3867d131bb01dd37')
+fetch('https://api.jcdecaux.com/vls/v1/stations?contract=lyon&apiKey=b9eae55b32f61852fc6a740a3867d131bb01dd37')
     .then(infosStations => infosStations.json())
     .then(data => displayStations(data))
     .then(data => initMap(data))
     .catch(error => console.log(error));
 
-
-
-
 //_____________________________________________________Déclarations des fonctions utilisées :
 
+//---------------------Fonction pour déclarer le tableau des stations :
 
-//---------------------fonction pour déclarer le tableau des stations :
 function displayStations(station) {
+
     //Intanciation de l'objet stationArray avec la class Station :
-    stationsArray = station.map(station => new Station(station.name, station.address, station.banking, station.position, station.status, station.bike_stands, station.available_bike_stands, station.available_bikes));
-    return stationsArray;
+   var stationsArray = station.map(station => new Station(station.name, station.address, station.banking, station.position, station.status, station.bike_stands, station.available_bike_stands, station.available_bikes));
+   return stationsArray;
 }
 
+//--------------------------------Fonction pour personnaliser les images des marqueurs :
 
-//--------------------------------fonction pour les images des marqueurs :
 function iconMarker(station) {
 
-    //si les stations sont ouvertes et n'ont aucun vélo de disponible alors les marqueurs sont verts :
+    //Si les stations sont ouvertes et n'ont aucun vélo de disponible alors les marqueurs sont verts :
     if (station.status === "OPEN" && station.availableBikes === 0) {
         return "images/iconlyon_vert.png";
-    //si les stations sont ouvertes alors les marqueurs sont rouges :
+    //Si les stations sont ouvertes alors les marqueurs sont rouges :
     } else if (station.status === "OPEN") {
         return "images/iconelyon.png";
     }
@@ -105,76 +101,63 @@ function iconMarker(station) {
     return "images/iconlyon_bleu.png";
 }
 
-/* ce que j'avais fait de mon côté qui ne fonctionnait pas :
-if (stations.status ==="OPEN"){
-    return "images/iconelyon.png";
-}else if (stations.status === "OPEN" && stations.availableBikes === 0) {
-    return "images/iconlyon_vert.png";
-} else {
-    return "images/iconelyon_bleu.png";
-}
-*/
+//----------------------Fonction pour déclarer la google map, les marqueurs positionnés sur celle-ci et les events associés :
 
-//-----------------------------------fonction pour créer des inputs :
-function createInput(id, type, value) {
-    const inputCanvasElt = document.createElement("input");
-    inputCanvasElt.id = id;
-    inputCanvasElt.setAttribute("type", type);
-    inputCanvasElt.setAttribute("value", value);
-    inputCanvasElt.setAttribute("required", "required");
-
-    return inputCanvasElt;
-}
-
-//----------------------fonction pour Déclarer la google map, les marqueurs positionnés sur celle-ci et les events associés :
 function initMap(data) {
-    //Déclaration et ajout de la google map :
-    const googleMap = new google.maps.Map(document.getElementById('map'), {
+
+    //Intanciation de l'objet googleMap avec la class Map :
+    const googleMap = new google.maps.Map(document.getElementById('map')/*noeud*/, /*options*/{
+        //Zoom de la carte :
         zoom: 12,
+        //Coordonnées gps de Lyon :
         center: {
             lat: 45.750000,
             lng: 4.850000
         }
     });
 
-    //Boucle qui parcours les stations de Lyon afin d'ajouter un marqueur par station sur la google map ainsi que des events associés :
+    //Boucle qui parcours les stations de Lyon afin d'ajouter un marqueur par station sur la googleMap ainsi que des events associés :
+
     data.forEach(function (station) {
-        //si une reservation est présente dans sessionStorage sur tel station on lui retire le vélo qui a été reservé :
+
+        //Si une réservation est présente dans sessionStorage sur telle station on lui retire le vélo qui a été reservé :
         if (station.name === sessionStorage.getItem("station")) {
             station.availableBikes--;
         }
 
-
-        //Déclaration et ajout de l'objet marqueur :
+        //Intanciation de l'objet marker avec Le constructeur google.maps.Marker qui utilise un objet littéral Marker options unique qui spécifie les propriétés initiales du marqueur :
         const marker = new google.maps.Marker({
+            //Position des marqueurs sur chaques stations de Lyon (intanciation de position avec la class LatLng :
             position: new google.maps.LatLng(station.position),
+            //Spécifie l'objet googlMap sur lequel positionner les marqueurs :
             map: googleMap,
+            //Appel à la fonction iconMarker(stations) pour mettre en places les images des marqueurs :
             icon: iconMarker(station)
         });
 
-        //------------ajout de l'event quand l'utilisateur click sur un marqueur :
+        //------------Ajout d'un event quand l'utilisateur click sur un marqueur :
+
         marker.addListener('click', function () {
             
             //Intenciation de l'objet infoStation avec la class Station :
             const infoStation = new Station();
-            ////Appel de la méthode divInfoStation(station) de l'objet infoStation pour faire la div "info_stations" :
+            //Appel de la méthode divInfoStation(station) de l'objet infoStation pour mettre en place et faire apparaitre la div "info_stations" :
             infoStation.divInfoStation(station);
 
 
             //---Ajout d'un event sur le bouton valider du formulaire :
             validButtonElt.addEventListener("click", function (e) {
-                //est ce vraiment necéssaire :
-                /*if (sessionStorage.length >= 1){
-                    sessionStorage.clear();  
-                }*/
-                //Si l'utilisateur n'a pas signé alors une fenêtre apparait avec le message suivant :
+               
+                //Si l'utilisateur n'a pas signé alors une fenêtre apparaît avec le message suivant :
                 if (signaturePad.isEmpty() === true) {
+                    //Stop le comportement d'origine de l'event tant que l'utilisateur n'a pas signé :
                     e.preventDefault();
                     return alert("Veuillez signer s'il vous plaît !");
-                    
+
                 //Sinon la réservation peut se faire :
-                } else {
-                    //Création d'un var dateBooking pour calculer le compte à rebour :
+                } else  {
+                    
+                    //Création d'une var dateBooking pour calculer le compte à rebour :
                     var dateBooking = new Date();
 
                     //Enregistrement des clés et valeurs (infos de réservation) dans le navigateur avec sessionStorage :
@@ -192,38 +175,37 @@ function initMap(data) {
                     sessionStorage.getItem("availablesBikes");
 
                     //Démarrage du compte à rebour avec class timer :
-                    /*var timerObject = new Timer(20, (sessionStorage.getItem("date")));
-                    timerObject.myTimer();
-                    timerObject.exeTimer();*/
-
+                   var bookingTimer = new Timer();
+                   bookingTimer.myTimer();
+                   return bookingTimer.exeTimer();
+                   // Affiche le timer : 
+    
+              
                     //Démarrage du compte à rebour avec fonction :
-                    myVar;
-
+                   // myVar;
                 }
-
             });
 
 
         });
 
-        //ajout des marqueurs dans le tableau markers :
+        //Ajout des marqueurs dans le tableau markers :
         markers.push(marker);
     });
 
 
-    //Déclaration et ajout de l'objet markercluster pour le regroupement de tous les marqeurs :
+    //Intanciation de l'objet markerCluster avec la class MarkerClusterer pour le regroupement des marqeurs :
     const markerCluster = new MarkerClusterer(googleMap, markers, {
+        //Images utiliser pour le regroupement :
         imagePath: 'images/m',
     });
 
     return googleMap;
 };
 
-
 //___________________________________________________Ajouts d'events :
 
-
-//--------ajout de l'event quand l'utilisateur click sur le bouton réserver :
+//--------Ajout de l'event quand l'utilisateur click sur le bouton réserver :
 
 bookingButtonElt.addEventListener("click", function () {
     
@@ -234,9 +216,10 @@ bookingButtonElt.addEventListener("click", function () {
     
 });
 
-//---------------ajout d'un event sur le bouton effacer :
+//---------------Ajout d'un event sur le bouton effacer :
 
 clearButtonElt.addEventListener("click", function () {
+
     //La signature du canvas s'efface :
     signaturePad.clear();
 });

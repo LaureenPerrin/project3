@@ -1,3 +1,4 @@
+
 //---------------------class Booking  pour les réservation de vélo :
 
 class Booking {
@@ -6,10 +7,12 @@ class Booking {
         this.user = User;
     }
 
-    //méthode pour accéder à la réservation :
+    //-----Méthode pour accéder à la réservation :
+
     booking() {
+
         formElt.style.display = "block";
-    };
+    }
 
 }
 

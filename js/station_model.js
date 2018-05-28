@@ -1,4 +1,6 @@
+
 //-----------------------class Station pour les stations de vélo de Lyon :
+
 class Station {
     constructor(name, address, banking, position, status, bikestands, availableBikeStands, availableBikes) {
         this.name = name;
@@ -11,7 +13,8 @@ class Station {
         this.availableBikes = availableBikes;
     }
 
-    //---------------------------------méthode pour créer la div infoStation :
+    //---------------------------------Méthode pour créer la div infoStation :
+    
     divInfoStation(station) {
 
         infoStationsElt.style.display = "block";
@@ -20,20 +23,20 @@ class Station {
         addressStationElt.textContent = "Adresse : " + station.address;
         bankingStationElt.textContent = station.banking;
 
-        //si bankingStationElt égal à true alors la station sélectionnée a un terminal de paiement et le premier message apparait :
+        //Si bankingStationElt égal à true alors la station sélectionnée a un terminal de paiement et le premier message apparait :
         if (bankingStationElt.textContent) {
             bankingStationElt.textContent = "Cette station a un terminal de paiement.";
-            //autrement la station sélectionnée n'a pas de terminal de paiement et le second message apparait :
+            //Autrement la station sélectionnée n'a pas de terminal de paiement et le second message apparait :
         } else {
             bankingStationElt.textContent = "Cette station n'a pas de terminal de paiement.";
         }
 
         statusStationElt.textContent = station.status;
 
-        //si statusStationElt est égal à open alors la station sélectionnée est ouverte et le premier message apparait :
+        //Si statusStationElt est égal à open alors la station sélectionnée est ouverte et le premier message apparait :
         if (statusStationElt.textContent === "open") {
             statusStationElt.textContent = "Elle est actuellement ouverte.";
-            //autrement la station sélectionnée est fermée et le second message apparait :
+            //Autrement la station sélectionnée est fermée et le second message apparait :
         } else {
             statusStationElt.textContent = "Elle est actuellement fermée.";
         }
@@ -51,6 +54,5 @@ class Station {
         }
 
     }
-
 
 }
