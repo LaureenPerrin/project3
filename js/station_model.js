@@ -13,8 +13,23 @@ class Station {
         this.availableBikes = availableBikes;
     }
 
+    //---------------------------------Méthode pour personnaliser les images des marqueurs :
+
+    setIconMarker(station) {
+
+        //Si les stations sont ouvertes et n'ont aucun vélo de disponible alors les marqueurs sont verts :
+        if (station.status === "OPEN" && station.availableBikes === 0) {
+            return "images/iconlyon_vert.png";
+            //Si les stations sont ouvertes alors les marqueurs sont rouges :
+        } else if (station.status === "OPEN") {
+            return "images/iconelyon.png";
+        }
+        //Dans les autres cas les marqueurs sont bleus :
+        return "images/iconlyon_bleu.png";
+    }
+
     //---------------------------------Méthode pour créer la div infoStation :
-    
+
     divInfoStation(station) {
 
         infoStationsElt.style.display = "block";

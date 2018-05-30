@@ -10,7 +10,6 @@ class Booking {
     //-----Méthode pour accéder à la réservation :
 
     booking() {
-
         formElt.style.display = "block";
     }
 

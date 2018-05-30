@@ -167,6 +167,11 @@ p#address_station {
  font-weight: bold;
 }
 
+#infos {
+  list-style: none;
+  margin: 5px;
+}
+
 /*_______________________________________canvas__________________________________________*/
 
 #form_canvas {
@@ -318,9 +323,16 @@ footer {
   }
 
   /*________________div infos stations_______________________*/
+  div#map_divstation {
+    display: flex;
+    justify-content: center;
+    align-items: baseline;
+} 
 
   #info_stations {
-  font-size: 20px;
+    height: 550px;
+    font-size: 15px;
+    margin-left: 10px;
   }
 
   /*________________compteur________________________________*/

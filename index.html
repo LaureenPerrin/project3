@@ -12,26 +12,23 @@
     <title>Vélo'v</title>
 
     <!--phrase donnée si url copiée sur les réseaux sociaux-->
-    <meta name="description" content="Grâce à notre application web Vélo'v vous pourrez vous déplacer dans la belle ville de Lyon en réservant un vélo en un clic !"
-    />
+    <meta name="description" content="Grâce à notre application web Vélo'v vous pourrez vous déplacer dans la belle ville de Lyon en réservant un vélo en un clic !"/>
 
     <!-- pour Facebook Open Graph data -->
-    <meta property="og:title" content="Vélo'v" />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="..." />
-    <meta property="og:image" content="..." />
-    <meta property="og:description" content="Grâce à notre application web Vélo'v vous pourrez vous déplacer dans la belle ville de Lyon en réservant un vélo en un clic !"
-    />
+    <meta property="og:title" content="Vélo'v"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:url" content="http://www.project3.lperrindevweb.com/"/>
+    <meta property="og:image" content="images/velov_logo.png"/>
+    <meta property="og:description" content="Grâce à notre application web Vélo'v vous pourrez vous déplacer dans la belle ville de Lyon en réservant un vélo en un clic !"/>
 
     <!-- pour Twitter Card data -->
-    <meta name="twitter:card" content="summary" />
-    <meta name="twitter:site" content="@..." />
-    <meta name="twitter:creator" content="@Vélo'v" />
-    <meta property="og:url" content="http://bits.blogs.nytimes.com/2011/12/08/a-twitter-for-my-sister/" />
-    <meta property="og:title" content="Vélo'v" />
-    <meta property="og:description" content="Grâce à notre application web Vélo'v vous pourrez vous déplacer dans la belle ville de Lyon en réservant un vélo en un clic !"
-    />
-    <meta property="og:image" content="..." />
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:site" content="@project3.lperrindevweb.com"/>
+    <meta name="twitter:creator" content="@Vélo'v"/>
+    <meta property="og:url" content="http://www.project3.lperrindevweb.com/"/>
+    <meta property="og:title" content="Vélo'v"/>
+    <meta property="og:description" content="Grâce à notre application web Vélo'v vous pourrez vous déplacer dans la belle ville de Lyon en réservant un vélo en un clic !"/>
+    <meta property="og:image" content="images/velov_logo.png"/>
 
     <!--lien mise en  forme css-->
     <link rel="stylesheet" type="text/css" href="css/reset.css" />
@@ -69,10 +66,12 @@
                         <img class="image_6" src="images/image_6.jpg" alt="Un vélo'v vue de profil avec descriptif de chaque partie du vélo" />
                     </li>
                     <li>
-                        <img class="image_7" src="images/image_7.jpg" alt="Vue de dos, une femme sur un vélo'v, le bras gauche levé pour tourné" />
+                        <img class="image_7" src="images/image_7.jpg" alt="Vue de dos, une femme sur un vélo'v, le bras gauche levé pour tourné"
+                        />
                     </li>
                     <li>
-                        <img class="image_8" src="images/image_8.jpg" alt="Vue de dos, un homme sur un vélo'v qui va traversser un passage piéton" />
+                        <img class="image_8" src="images/image_8.jpg" alt="Vue de dos, un homme sur un vélo'v qui va traversser un passage piéton"
+                        />
                     </li>
                     <li>
                         <img class="image_9" src="images/image_9.jpg" alt="Vue zoomée sur le système antivol d'un vélo'v" />
@@ -93,21 +92,25 @@
             </div>
         </div>
 
-        <div id="map"></div>
+        <div id="map_divstation">
 
-        <div id="info_stations">
-            <p id="title_info">Détail de la station</p>
-            <p id="name_station"></p>
-            <p id="address_station"></p>
-            <ul>
-                <li id="banking_station"></li>
-                <li id="status_station"></li>
-                <p id="infos">Elle dispose de :</p>
-                <li id="bike_stands_stations"></li>
-                <li id="available_bike_stands_station"></li>
-                <li id="available_bikes_station"></li>
-            </ul>
-            <input id="booking_button" type="button" value="Réserver">
+            <div id="map"></div>
+
+            <div id="info_stations">
+                <p id="title_info">Détail de la station</p>
+                <p id="name_station"></p>
+                <p id="address_station"></p>
+                <ul>
+                    <li id="banking_station"></li>
+                    <li id="status_station"></li>
+                    <li id="infos">Elle dispose de :</li>
+                    <li id="bike_stands_stations"></li>
+                    <li id="available_bike_stands_station"></li>
+                    <li id="available_bikes_station"></li>
+                </ul>
+                <input id="booking_button" type="button" value="Réserver">
+            </div>
+
         </div>
 
         <form id="form_canvas">
@@ -123,8 +126,8 @@
 
             <canvas class="signature-pad" id="signature-pad"></canvas>
 
-            <input id="valid_button" value="Valider" required="required" type="submit">
-            <input id="clear_button" value="Effacer" required="required" type="button">
+            <input id="valid_button" value="Valider" type="submit">
+            <input id="clear_button" value="Effacer" type="button">
         </form>
 
 
@@ -157,7 +160,7 @@
 
     <!--class timer-->
     <script src="js/timer_model.js"></script>
-    
+
     <!--fichier js principal-->
     <script src="js/app.js"></script>
 
