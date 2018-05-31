@@ -136,6 +136,12 @@ function initMap(data) {
             //---Ajout d'un event sur le bouton valider du formulaire :
 
             validButtonElt.addEventListener("click", function (e) {
+                
+                //Si il y à déjà des données enregistrées dans sessionStorage :
+                if (sessionStorage.lenght >=1) {
+                    //Alors on les supprime :
+                    sessionStorage.clear();
+                }
 
                 //Si l'utilisateur n'a pas signé alors une fenêtre apparaît avec le message suivant :
                 if (signaturePad.isEmpty() === true) {
