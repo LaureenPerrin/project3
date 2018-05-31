@@ -14,6 +14,12 @@ const sliderElt = document.querySelector("slider_container");
 //Déclaration du tableau des marqueurs :
 const markers = [];
 
+//Déclaration du tableau des user :
+const users = [];
+
+//Déclaration du tableau des validBooking :
+const validBookings = [];
+
 //Déclaration de la div de la google map :
 const mapZoneElt = document.querySelector("map");
 
@@ -139,7 +145,7 @@ function initMap(data) {
 
                     //Sinon la réservation peut se faire :
                 } else {
-                   
+
                     //Création d'une var dateBooking pour calculer le compte à rebour :
                     var dateBooking = new Date();
 
@@ -154,9 +160,9 @@ function initMap(data) {
                     //Récupération des données enregistrées dans le navigateur :
                     sessionStorage.getItem("date");
 
-                    //Démarrage du compte à rebour avec fonction :
+                    //Démarrage du timer :
                     myVar;
-                   
+
                 }
 
             });
@@ -173,7 +179,19 @@ function initMap(data) {
         imagePath: 'images/m',
     });
 
+    //Instanciation d'un objet user avec la class User :
+    //var user = new User(sessionStorage.getItem("nom"), sessionStorage.getItem("prénom"), sessionStorage.getItem("signature"));
+    var user = new User(sessionStorage.getItem("nom"), sessionStorage.getItem("prénom"), sessionStorage.getItem("signature"));
+    //Insertion des user créé dans le tableau users :
+    users.push(user);
+
+    //Instanciation d'un objet validBooking avec la class Booking :
+    var validBooking = new Booking(true, sessionStorage.getItem("date"), users);
+    //Insertion des validBooking créé dans le tableau validBookings :
+    validBookings.push(validBooking);
+
     return googleMap;
+
 };
 
 //___________________________________________________Ajouts d'events :
@@ -188,7 +206,6 @@ bookingButtonElt.addEventListener("click", function () {
     createBooking.booking();
 
 });
-
 
 //---------------Ajout d'un event sur le bouton effacer :
 

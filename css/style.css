@@ -304,7 +304,7 @@ footer {
   align-items: center;
   margin-bottom: 20px;
   font-size: 20px;
-  display: "";
+  display: "block";
   }
 
   #prev, #next {
