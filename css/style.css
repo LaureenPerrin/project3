@@ -213,7 +213,7 @@ input#input_last_name {
   border: 1px solid black;
 }
 
-canvas {
+#canvas {
   width: 250px;
   height: 150px;
   border: 1px solid black;

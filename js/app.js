@@ -73,6 +73,17 @@ containerCountDownElt.appendChild(countDownElt);
 //Ajout de l'élément containerCountDownElt dans l'élément mainWrapperElt avant son élément enfant footerElt :
 mainWrapperElt.insertBefore(containerCountDownElt, footerElt);
 
+//Instanciation de l'objet createBooking avec la class Booking :
+const createBooking = new Booking();
+
+//Intanciation de l'objet createCanvas :
+var createCanvas = new Canvas();
+
+//Intanciation de l'objet createSlider :
+var createSlider = new Slider();
+//Appel de sa méthode init pour initialiser le slider :
+createSlider.init();
+
 //_______________________________________________________________Appel AJAX:
 
 fetch('https://api.jcdecaux.com/vls/v1/stations?contract=lyon&apiKey=b9eae55b32f61852fc6a740a3867d131bb01dd37')
@@ -96,7 +107,7 @@ function displayStations(station) {
 
 function initMap(data) {
 
-    //Intanciation de l'objet googleMap avec la class Map :
+    //Instanciation de l'objet googlMap avec la class Map :
     const googleMap = new google.maps.Map(document.getElementById('map')/*noeud*/, /*options*/{
         //Zoom de la carte :
         zoom: 12,
@@ -111,10 +122,8 @@ function initMap(data) {
 
     data.forEach(function (station) {
 
-        //Si une réservation est présente dans sessionStorage sur telle station on lui retire le vélo qui a été reservé :
-        if (station.name === sessionStorage.getItem("station")) {
-            station.availableBikes--;
-        }
+        //Appel de la méthode condition de l'objet station :
+        station.condition(station);
 
         //Intanciation de l'objet marker avec Le constructeur google.maps.Marker qui utilise un objet littéral Marker options unique qui spécifie les propriétés initiales du marqueur :
         const marker = new google.maps.Marker({
@@ -136,35 +145,21 @@ function initMap(data) {
             //---Ajout d'un event sur le bouton valider du formulaire :
 
             validButtonElt.addEventListener("click", function (e) {
-                
-                //Si il y à déjà des données enregistrées dans sessionStorage :
-                if (sessionStorage.lenght >=1) {
-                    //Alors on les supprime :
-                    sessionStorage.clear();
-                }
 
-                //Si l'utilisateur n'a pas signé alors une fenêtre apparaît avec le message suivant :
-                if (signaturePad.isEmpty() === true) {
+                //Appel de la méthode webStorageCondition() de l'objet createBooking :
+                createBooking.webStorageCondition();
+
+                //Si l'utilisateur n'a pas remplit tous les champs alors une fenêtre apparaît avec le message suivant :
+                if (inputFirstNameElt.value == "" || inputLastNameElt.value == "" || createCanvas.emptyCanvas()) {
                     //Stop le comportement d'origine de l'event tant que l'utilisateur n'a pas signé :
                     e.preventDefault();
-                    return alert("Veuillez signer s'il vous plaît !");
+                    return alert("Veuillez remplir tous les champs s'il vous plaît !");
 
                     //Sinon la réservation peut se faire :
                 } else {
 
-                    //Création d'une var dateBooking pour calculer le compte à rebour :
-                    var dateBooking = new Date();
-
-                    //Enregistrement des clés et valeurs (infos de réservation) dans le navigateur avec sessionStorage :
-                    sessionStorage.setItem("prénom", inputFirstNameElt.value);
-                    sessionStorage.setItem("nom", inputLastNameElt.value);
-                    sessionStorage.setItem("signature", signature);
-                    sessionStorage.setItem("date", dateBooking);
-                    sessionStorage.setItem("station", station.name);
-                    sessionStorage.setItem("booking_status", true);
-
-                    //Récupération des données enregistrées dans le navigateur :
-                    sessionStorage.getItem("date");
+                    //Appel de la méthode webStorage de l'objet createBooking :
+                    createBooking.webStorage(station);
 
                     //Démarrage du timer :
                     myVar;
@@ -206,8 +201,6 @@ function initMap(data) {
 
 bookingButtonElt.addEventListener("click", function () {
 
-    //Instanciation de l'objet createBooking avec la class Booking :
-    const createBooking = new Booking();
     //Appel de la méthode booking de l'objet createBooking pour faire apparaitre le formulaire de réservation :
     createBooking.booking();
 
@@ -217,8 +210,8 @@ bookingButtonElt.addEventListener("click", function () {
 
 clearButtonElt.addEventListener("click", function () {
 
-    //La signature du canvas s'efface :
-    signaturePad.clear();
+    //Apple de la méthode clearDraw de l'objet createCanvas pour effacer la signature du canvas :
+    createCanvas.clearDraw();
 });
 
 
