@@ -17,15 +17,15 @@ class Station {
 
     setIconMarker(station) {
 
-        //Si les stations sont ouvertes et n'ont aucun vélo de disponible alors les marqueurs sont verts :
+        //Si les stations sont ouvertes et n'ont aucun vélo de disponible alors les marqueurs sont bleus :
         if (station.status === "OPEN" && station.availableBikes === 0) {
-            return "images/iconelyon.png";
-            //Si les stations sont ouvertes alors les marqueurs sont rouges :
+            return "images/iconlyon_bleu.png";
+            //Si les stations sont ouvertes alors les marqueurs sont verts :
         } else if (station.status === "OPEN") {
             return "images/iconlyon_vert.png";
         }
-        //Dans les autres cas les marqueurs sont bleus :
-        return "images/iconlyon_bleu.png";
+        //Dans les autres cas les marqueurs sont rouges :
+        return "images/iconelyon.png";
     }
 
     //---------------------------------Méthode pour créer la div infoStation :
@@ -73,7 +73,7 @@ class Station {
     //---------------------------------Méthode qui permet si une réservation est présente dans sessionStorage sur telle station de lui retirer le vélo qui a été reservé :
 
     condition(station) {
-        
+
         if (station.name === sessionStorage.getItem("station")) {
             station.availableBikes--;
         }
