@@ -78,7 +78,9 @@ const newCanvas = document.getElementById('canvas');
 var Canvas = new NewCanvas(newCanvas, newCanvas.getContext('2d'), 0, 0, 0, 0, 0, false, false);
 
 //Intanciation de l'objet createSlider :
-var createSlider = new Slider();
+var newSlider = document.getElementById("slider");
+var imgSlider = document.getElementsByClassName("image");
+var createSlider = new Slider(newSlider, imgSlider);
 
 //Appel de sa méthode init pour initialiser le slider :
 createSlider.init();

@@ -2,13 +2,13 @@
 //--------------------------Class Slider pour créer le slider d'introduction :
 
 class Slider {
-    constructor() {
+    constructor(domSlider, imageSlider) {
 
-        this.$slider = $('#slider'), // on cible le bloc du slider
-        this.$img = $('#slider img'), // on cible les images contenues dans le slider
-        this.indexImg = this.$img.length - 1, // on définit l'index du dernier élément
-        this.i = 0, // on initialise un compteur
-        this.$currentImg = this.$img.eq(this.i) // enfin, on cible l'image courante, qui possède l'index i (0 pour l'instant)
+        this._$slider = domSlider, //$('#slider'), on cible le bloc du slider
+        this._$img = imageSlider, // $('#slider img')on cible les images contenues dans le slider
+        this._indexImg = this._$img.length - 1, // on définit l'index du dernier élément
+        this._i = 0, // on initialise un compteur
+        this._$currentImg = this._$img.eq(this._i) // enfin, on cible l'image courante, qui possède l'index i (0 pour l'instant)
 
     }
 
@@ -17,18 +17,18 @@ class Slider {
     slideImg() {
 
         // si le compteur est inférieur au dernier index
-        if (this.i < this.indexImg) {
+        if (this._i < this._indexImg) {
             // on l'incrémente
-            this.i++;
+            this._i++;
             // sinon, on le remet à 0 (première image)
         } else {
-            this.i = 0;
+            this._i = 0;
         }
 
-        this.$img.css('display', 'none');
+        this._$img.css('display', 'none');
 
-        this.$currentImg = this.$img.eq(this.i);
-        this.$currentImg.css('display', 'block');
+        this._$currentImg = this._$img.eq(this._i);
+        this._$currentImg.css('display', 'block');
 
     }
 
@@ -40,9 +40,9 @@ class Slider {
         $(document).ready(function () {
 
             // on cache les images :
-            that.$img.css('display', 'none');
+            that._$img.css('display', 'none');
             // on affiche seulement l'image courante :
-            that.$currentImg.css('display', 'block');
+            that._$currentImg.css('display', 'block');
 
             //events clavier :
             $(document).keyup(function (e) {
@@ -50,30 +50,30 @@ class Slider {
                 //touche gauche clavier :
                 if (e.keyCode === 37) {
                     // on décrémente le compteur, puis on réalise la même chose que pour la fonction "suivante" :
-                    that.i--;
+                    that._i--;
 
-                    if (that.i >= 0) {
-                        that.$img.css('display', 'none');
-                        that.$currentImg = that.$img.eq(that.i);
-                        that.$currentImg.css('display', 'block');
+                    if (that._i >= 0) {
+                        that._$img.css('display', 'none');
+                        that._$currentImg = that._$img.eq(that._i);
+                        that._$currentImg.css('display', 'block');
                     } else {
-                        that.i = 0;
+                        that._i = 0;
                     }
                     // image suivante :
                     //touche droite clavier :
                 } else if (e.keyCode === 39) {
                     // on incrémente le compteur :
-                    that.i++;
+                    that._i++;
 
-                    if (that.i <= that.indexImg) {
+                    if (that._i <= that._indexImg) {
                         // on cache les images
-                        that.$img.css('display', 'none');
+                        that._$img.css('display', 'none');
                         // on définit la nouvelle image :
-                        that.$currentImg = that.$img.eq(that.i);
+                        that._$currentImg = that._$img.eq(that._i);
                         // puis on l'affiche :
-                        that.$currentImg.css('display', 'block');
+                        that._$currentImg.css('display', 'block');
                     } else {
-                        that.i = that.indexImg;
+                        that._i = that._indexImg;
                     }
 
                 }
@@ -84,17 +84,17 @@ class Slider {
             $('#next').click(function () {
 
                 // on incrémente le compteur
-                that.i++;
+                that._i++;
 
-                if (that.i <= that.indexImg) {
+                if (that._i <= that._indexImg) {
                     // on cache les images :
-                    that.$img.css('display', 'none');
+                    that._$img.css('display', 'none');
                     // on définit la nouvelle image :
-                    that.$currentImg = that.$img.eq(that.i);
+                    that._$currentImg = that._$img.eq(that._i);
                     // puis on l'affiche :
-                    that.$currentImg.css('display', 'block');
+                    that._$currentImg.css('display', 'block');
                 } else {
-                    that.i = that.indexImg;
+                    that._i = that._indexImg;
                 }
 
             });
@@ -103,14 +103,14 @@ class Slider {
             $('#prev').click(function () {
 
                 // on décrémente le compteur, puis on réalise la même chose que pour la fonction "suivante" :
-                that.i--;
+                that._i--;
 
-                if (that.i >= 0) {
-                    that.$img.css('display', 'none');
-                    that.$currentImg = that.$img.eq(that.i);
-                    that.$currentImg.css('display', 'block');
+                if (that._i >= 0) {
+                    that._$img.css('display', 'none');
+                    that._$currentImg = that._$img.eq(that._i);
+                    that._$currentImg.css('display', 'block');
                 } else {
-                    that.i = 0;
+                    that._i = 0;
                 }
 
             });
