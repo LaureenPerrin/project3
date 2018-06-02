@@ -72,7 +72,7 @@ class Station {
 
     //---------------------------------Méthode qui permet si une réservation est présente dans sessionStorage sur telle station de lui retirer le vélo qui a été reservé :
 
-    condition(station) {
+    isAvailableBikes(station) {
 
         if (station.name === sessionStorage.getItem("station")) {
             station.availableBikes--;

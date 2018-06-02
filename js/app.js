@@ -14,9 +14,6 @@ const sliderElt = document.querySelector("slider_container");
 //Déclaration du tableau des marqueurs :
 const markers = [];
 
-//Déclaration du tableau des user :
-const users = [];
-
 //Déclaration du tableau des validBooking :
 const validBookings = [];
 
@@ -76,15 +73,18 @@ mainWrapperElt.insertBefore(containerCountDownElt, footerElt);
 //Instanciation de l'objet createBooking avec la class Booking :
 const booking = new Booking();
 
-//Intanciation de l'objet createCanvas :
-var canvas = new Canvas();
+//Déclaration du canvas et instanciation de l'objet Canvas :
+const newCanvas = document.getElementById('canvas');
+var Canvas = new NewCanvas(newCanvas, newCanvas.getContext('2d'), 0, 0, 0, 0, 0, false, false);
 
 //Intanciation de l'objet createSlider :
 var createSlider = new Slider();
+
 //Appel de sa méthode init pour initialiser le slider :
 createSlider.init();
 
-var timer = new Timer();
+
+
 //_______________________________________________________________Appel AJAX:
 
 fetch('https://api.jcdecaux.com/vls/v1/stations?contract=lyon&apiKey=b9eae55b32f61852fc6a740a3867d131bb01dd37')
@@ -124,7 +124,7 @@ function initMap(data) {
     data.forEach(function (station) {
 
         //Appel de la méthode condition de l'objet station :
-        station.condition(station);
+        station.isAvailableBikes(station);
 
         //Intanciation de l'objet marker avec Le constructeur google.maps.Marker qui utilise un objet littéral Marker options unique qui spécifie les propriétés initiales du marqueur :
         const marker = new google.maps.Marker({
@@ -147,19 +147,16 @@ function initMap(data) {
 
             validButtonElt.addEventListener("click", function (e) {
 
-                //Appel de la méthode webStorageCondition() de l'objet createBooking :
                 booking.storeBookingWebCondition();
 
                 //Si l'utilisateur n'a pas remplit tous les champs alors une fenêtre apparaît avec le message suivant :
-                if (inputFirstNameElt.value == "" || inputLastNameElt.value == "" || canvas.emptyCanvas()) {
-                    //Stop le comportement d'origine de l'event tant que l'utilisateur n'a pas signé :
+                if (inputFirstNameElt.value == "" || inputLastNameElt.value == "" || Canvas.emptyCanvas()) {
                     e.preventDefault();
                     return alert("Veuillez remplir tous les champs s'il vous plaît !");
 
-                    //Sinon la réservation peut se faire :
                 } else {
                     e.preventDefault();
-                    //Appel de la méthode webStorage de l'objet createBooking :
+                   
                     booking.storeBookingWeb(station);
 
                     //Démarrage du timer :
@@ -187,11 +184,9 @@ function initMap(data) {
     //Instanciation d'un objet user avec la class User :
     //var user = new User(sessionStorage.getItem("nom"), sessionStorage.getItem("prénom"), sessionStorage.getItem("signature"));
     var user = new User(sessionStorage.getItem("nom"), sessionStorage.getItem("prénom"), sessionStorage.getItem("signature"));
-    //Insertion des user créé dans le tableau users :
-    users.push(user);
 
     //Instanciation d'un objet validBooking avec la class Booking :
-    var validBooking = new Booking(true, sessionStorage.getItem("date"), users);
+    var validBooking = new Booking(true, sessionStorage.getItem("date"), user);
     //Insertion des validBooking créé dans le tableau validBookings :
     validBookings.push(validBooking);
 
@@ -215,7 +210,7 @@ bookingButtonElt.addEventListener("click", function () {
 clearButtonElt.addEventListener("click", function () {
 
     //Apple de la méthode clearDraw de l'objet createCanvas pour effacer la signature du canvas :
-    canvas.clearCanvas();
+    Canvas.clearCanvas();
 });
 
 

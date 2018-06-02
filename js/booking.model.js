@@ -20,10 +20,11 @@ class Booking {
     initBooking() {
 
         formElt.style.display = "block";
-        //Appel de la méthode init de l'objet createCanvas pour signer :
-        //canvas.init();
-        canvas.init();
-        //canvas.initTactil();
+
+        var Canvas = new NewCanvas(newCanvas, newCanvas.getContext('2d'), 0, 0, 0, 0, 0, false, false);
+         //Appel de la méthode initCanvas de l'objet Canvas pour signer :
+        Canvas.initCanvas();
+    
     }
 
     //-----Méthode pour supprimer es données existantes si déjà il y a déjà des données d'enregistrées :
@@ -47,7 +48,7 @@ class Booking {
     //Enregistrement des clés et valeurs (infos de réservation) dans le navigateur avec sessionStorage :
     sessionStorage.setItem("prénom", inputFirstNameElt.value);
     sessionStorage.setItem("nom", inputLastNameElt.value);
-    sessionStorage.setItem("signature", canvas.signature());
+    sessionStorage.setItem("signature", Canvas.signature());
     sessionStorage.setItem("date", dateBooking);
     sessionStorage.setItem("station", station.name);
     sessionStorage.setItem("booking_status", this.validBookingStatus());
