@@ -1,15 +1,15 @@
 
 //--------------------------Class Slider pour créer le slider d'introduction :
 
-class Slider {
-    constructor(domSlider, imageSlider) {
+class NewSlider {
+    constructor() {
 
-        this._$slider = domSlider, //$('#slider'), on cible le bloc du slider
-        this._$img = imageSlider, // $('#slider img')on cible les images contenues dans le slider
-        this._indexImg = this._$img.length - 1, // on définit l'index du dernier élément
-        this._i = 0, // on initialise un compteur
-        this._$currentImg = this._$img.eq(this._i) // enfin, on cible l'image courante, qui possède l'index i (0 pour l'instant)
-
+        this._$slider = $('#slider'); //, on cible le bloc du slider
+        this._$img = $('#slider img'); // on cible les images contenues dans le slider
+        this._indexImg = this._$img.length - 1; // on définit l'index du dernier élément
+        this._i = 0; // on initialise un compteur
+        this._$currentImg = this._$img.eq(this._i); // enfin, on cible l'image courante, qui possède l'index i (0 pour l'instant)
+        
     }
 
     //---------------------------------Méthode pour faire défiler le slider :
@@ -36,9 +36,9 @@ class Slider {
 
     init() {
         var that = this;
-
+        
         $(document).ready(function () {
-
+            
             // on cache les images :
             that._$img.css('display', 'none');
             // on affiche seulement l'image courante :
