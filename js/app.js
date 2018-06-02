@@ -74,16 +74,17 @@ containerCountDownElt.appendChild(countDownElt);
 mainWrapperElt.insertBefore(containerCountDownElt, footerElt);
 
 //Instanciation de l'objet createBooking avec la class Booking :
-const createBooking = new Booking();
+const booking = new Booking();
 
 //Intanciation de l'objet createCanvas :
-var createCanvas = new Canvas();
+var canvas = new Canvas();
 
 //Intanciation de l'objet createSlider :
 var createSlider = new Slider();
 //Appel de sa méthode init pour initialiser le slider :
 createSlider.init();
 
+var timer = new Timer();
 //_______________________________________________________________Appel AJAX:
 
 fetch('https://api.jcdecaux.com/vls/v1/stations?contract=lyon&apiKey=b9eae55b32f61852fc6a740a3867d131bb01dd37')
@@ -147,23 +148,26 @@ function initMap(data) {
             validButtonElt.addEventListener("click", function (e) {
 
                 //Appel de la méthode webStorageCondition() de l'objet createBooking :
-                createBooking.webStorageCondition();
+                booking.storeBookingWebCondition();
 
                 //Si l'utilisateur n'a pas remplit tous les champs alors une fenêtre apparaît avec le message suivant :
-                if (inputFirstNameElt.value == "" || inputLastNameElt.value == "" || createCanvas.emptyCanvas()) {
+                if (inputFirstNameElt.value == "" || inputLastNameElt.value == "" || canvas.emptyCanvas()) {
                     //Stop le comportement d'origine de l'event tant que l'utilisateur n'a pas signé :
                     e.preventDefault();
                     return alert("Veuillez remplir tous les champs s'il vous plaît !");
 
                     //Sinon la réservation peut se faire :
                 } else {
-
+                    e.preventDefault();
                     //Appel de la méthode webStorage de l'objet createBooking :
-                    createBooking.webStorage(station);
+                    booking.storeBookingWeb(station);
 
                     //Démarrage du timer :
-                    myVar;
-
+                    //myVar;
+                    //timer.myTimer();
+                    //timer.exeTimer();
+                    
+                
                 }
 
             });
@@ -202,7 +206,7 @@ function initMap(data) {
 bookingButtonElt.addEventListener("click", function () {
 
     //Appel de la méthode booking de l'objet createBooking pour faire apparaitre le formulaire de réservation :
-    createBooking.booking();
+    booking.initBooking();
 
 });
 
@@ -211,7 +215,7 @@ bookingButtonElt.addEventListener("click", function () {
 clearButtonElt.addEventListener("click", function () {
 
     //Apple de la méthode clearDraw de l'objet createCanvas pour effacer la signature du canvas :
-    createCanvas.clearDraw();
+    canvas.clearCanvas();
 });
 
 
