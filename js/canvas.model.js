@@ -35,17 +35,17 @@ class NewCanvas {
     }
 
     signature() {
-        var signature = this._domCanvas.ToDataURL("image/png");
+        var signature = this._domCanvas.toDataURL("image/png");
         return signature;
     }
 
     validCanvas() {
-        this._drawing = true;
+       return this._drawing === true;
         
     }
 
     emptyCanvas() {
-        this._drawing = false;
+      return this._drawing === false;
     }
     
     //-----------Méthode pour dessiner dans le canvas :

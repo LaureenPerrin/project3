@@ -3,16 +3,16 @@
 
 class Booking {
     constructor(date, User) {
-        this.status = true;
-        this.date = date;
-        this.user = User;
+        this._status = true;
+        this._date = date;
+        this._user = User;
     }
 
     //-----Méthode pour accéder au status de la réservation :
 
     validBookingStatus() {
 
-        return this.status;
+        return this._status;
     }
 
     //-----Méthode pour accéder à la réservation :
@@ -20,9 +20,7 @@ class Booking {
     initBooking() {
 
         formElt.style.display = "block";
-
-        var Canvas = new NewCanvas(newCanvas, newCanvas.getContext('2d'), 0, 0, 0, 0, 0, false, false);
-         //Appel de la méthode initCanvas de l'objet Canvas pour signer :
+        //Appel de la méthode initCanvas de l'objet Canvas pour signer :
         Canvas.initCanvas();
     
     }

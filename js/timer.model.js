@@ -1,57 +1,52 @@
 
 //-------------------------------fonction utilisé pour le timer :
-class Timer {
-  constructor() {
-    this.timeInMinutes = 20;//timeInMinutes
-    this.storageBookingDate = sessionStorage.getItem('date');
-    this.countDownDate = new Date((Date.parse(this.storageBookingDate)) + this.timeInMinutes * 60 * 1001);
-    this.now = Date.parse(new Date());
-    this.distance = this.countDownDate - this.now;
-    //this.minutes = Math.floor((this.distance % (1000 * 60 * 60)) / (1000 * 60));
-    //this.seconds = Math.floor((this.distance % (1000 * 60)) / 1000);
+class NewTimer {
+  constructor(timeInMinutes, storageBookingDate, now) {
+    this._timeInMinutes = timeInMinutes;
+    this._storageBookingDate = storageBookingDate;
+    this._now = now;
+    this._countDownDate = new Date((Date.parse(this._storageBookingDate)) + this._timeInMinutes * 60 * 1001);
+    this._distance = this._countDownDate - this._now;
   }
-  exeTimer() {
-    setInterval(this.myTimer, 1000);
 
+  dicreaseTimer() {
+    if (this.isTimerOver()) {
+      this._distance = this._distance - 1000;
+      this.displayFormatedTimer();
+    
+    }
   }
-  myTimer() {
 
-    //var now = Date.parse(new Date());
+  isTimerOver() {
+    return this._distance > 0;
+  }
 
-    // Distance entre now et countDownDate permettant de faire le décompte du timer:
-    //var distance = this.countDownDate - this.now;
-
+  displayFormatedTimer() {
     // Calcul des minutes et secondes :
-    var minutes = Math.floor((this.distance % (1000 * 60 * 60)) / (1000 * 60));
-    var seconds = Math.floor((this.distance % (1000 * 60)) / 1000);
+    const minutes = Math.floor((this._distance % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((this._distance % (1000 * 60)) / 1000);
 
     // Affiche le timer :
-    if (this.distance > 0) {
-      messageValidBookingElt.textContent = "Vous avez réservé un vélo à la station " + sessionStorage.getItem("station") + ".";
-      countDownElt.textContent = "Votre réservation expirera dans " + minutes + " minute(s) " + "et " + seconds + " seconde(s). ";
-      messageNoBookingElt.style.display = "none";
-
-    }
-
-    // quand le timer est terminé :
-    else if (this.distance < 0) {
-      clearInterval(this.exeTimer);
-      document.getElementById("count_down").textContent = "Votre réservation a expiré.";
-      setTimeout(function () {
-
-        countDownElt.textContent = "none";
-        messageNoBookingElt.style.display = "block";
-        messageValidBookingElt.style.display = "none";
-
-      }, 3000);
-      sessionStorage.clear();
-
+    if (!this.isTimerOver()) {
+      console.log('Timer is over');
+    } else {
+      console.log('Timer is not over yet');
+      return minutes + " minutes et " + seconds + " seconde(s)";
     }
 
   }
-
-
 }
+
+var validButtonElt = document.getElementById("valid_button");
+
+validButtonElt.addEventListener('click', function() {
+  var myDate = new Date();
+  var newTimer = new NewTimer(20, myDate, myDate);
+  setInterval(function() {
+    newTimer.dicreaseTimer();
+    countDownElt.textContent = "Votre réservation expirera dans " + newTimer.displayFormatedTimer();
+  }, 1000);
+});
 
 
 

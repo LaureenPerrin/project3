@@ -39,7 +39,7 @@ const inputFirstNameElt = document.getElementById("input_first_name");
 const inputLastNameElt = document.getElementById("input_last_name");
 
 //Déclaration des bouttons valider et effacer :
-const validButtonElt = document.getElementById("valid_button");
+var validButtonElt = document.getElementById("valid_button");
 const clearButtonElt = document.getElementById("clear_button");
 
 //Déclaration du footer :
@@ -74,7 +74,7 @@ mainWrapperElt.insertBefore(containerCountDownElt, footerElt);
 const booking = new Booking();
 
 //Déclaration du canvas et instanciation de l'objet Canvas :
-const newCanvas = document.getElementById('canvas');
+var newCanvas = document.getElementById('canvas');
 var Canvas = new NewCanvas(newCanvas, newCanvas.getContext('2d'), 0, 0, 0, 0, 0, false, false);
 
 //Intanciation de l'objet Slider :
@@ -82,7 +82,6 @@ var Slider = new NewSlider();
 
 //Appel de sa méthode init pour initialiser le slider :
 Slider.init();
-
 
 
 //_______________________________________________________________Appel AJAX:
@@ -110,9 +109,7 @@ function initMap(data) {
 
     //Instanciation de l'objet googlMap avec la class Map :
     const googleMap = new google.maps.Map(document.getElementById('map')/*noeud*/, /*options*/{
-        //Zoom de la carte :
         zoom: 12,
-        //Coordonnées gps de Lyon :
         center: {
             lat: 45.750000,
             lng: 4.850000
@@ -120,7 +117,6 @@ function initMap(data) {
     });
 
     //Boucle qui parcours les stations de Lyon afin d'ajouter un marqueur par station sur la googleMap ainsi que des events associés :
-
     data.forEach(function (station) {
 
         //Appel de la méthode condition de l'objet station :
@@ -132,7 +128,6 @@ function initMap(data) {
             position: new google.maps.LatLng(station.position),
             //Spécifie l'objet googlMap sur lequel positionner les marqueurs :
             map: googleMap,
-            //Appel de la méthode setIconMarker() de l'objet station pour mettre en places les images des marqueurs :
             icon: station.setIconMarker(station)
         });
 
@@ -144,7 +139,6 @@ function initMap(data) {
             station.divInfoStation(station);
 
             //---Ajout d'un event sur le bouton valider du formulaire :
-
             validButtonElt.addEventListener("click", function (e) {
 
                 booking.storeBookingWebCondition();
@@ -155,34 +149,23 @@ function initMap(data) {
                     return alert("Veuillez remplir tous les champs s'il vous plaît !");
 
                 } else {
-                    e.preventDefault();
-                   
-                    booking.storeBookingWeb(station);
-
-                    //Démarrage du timer :
-                    //myVar;
-                    //timer.myTimer();
-                    //timer.exeTimer();
                     
-                
+                    booking.storeBookingWeb(station);
+                    //Démarrage du timer :
+                  
                 }
-
             });
-
         });
-
         //Ajout des marqueurs dans le tableau markers :
         markers.push(marker);
     });
 
     //Intanciation de l'objet markerCluster avec la class MarkerClusterer pour le regroupement des marqeurs :
     const markerCluster = new MarkerClusterer(googleMap, markers, {
-        //Images utiliser pour le regroupement :
         imagePath: 'images/m',
     });
 
     //Instanciation d'un objet user avec la class User :
-    //var user = new User(sessionStorage.getItem("nom"), sessionStorage.getItem("prénom"), sessionStorage.getItem("signature"));
     var user = new User(sessionStorage.getItem("nom"), sessionStorage.getItem("prénom"), sessionStorage.getItem("signature"));
 
     //Instanciation d'un objet validBooking avec la class Booking :
@@ -191,24 +174,19 @@ function initMap(data) {
     validBookings.push(validBooking);
 
     return googleMap;
-
 };
 
 //___________________________________________________Ajouts d'events :
 
 //--------Ajout de l'event quand l'utilisateur click sur le bouton réserver :
-
 bookingButtonElt.addEventListener("click", function () {
-
     //Appel de la méthode booking de l'objet createBooking pour faire apparaitre le formulaire de réservation :
     booking.initBooking();
 
 });
 
 //---------------Ajout d'un event sur le bouton effacer :
-
 clearButtonElt.addEventListener("click", function () {
-
     //Apple de la méthode clearDraw de l'objet createCanvas pour effacer la signature du canvas :
     Canvas.clearCanvas();
 });
