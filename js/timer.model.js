@@ -8,45 +8,59 @@ class NewTimer {
     this._countDownDate = new Date((Date.parse(this._storageBookingDate)) + this._timeInMinutes * 60 * 1001);
     this._distance = this._countDownDate - this._now;
   }
-
-  dicreaseTimer() {
+  
+  //--------Méthode pour décrémenter le timer + affichage :
+  dicreaseTimer(station) {
     if (this.isTimerOver()) {
       this._distance = this._distance - 1000;
-      this.displayFormatedTimer();
-    
+      this.displayFormatedTimer(station);
     }
   }
 
+  //---------Méthode pour indiquer quand le timer est en cours :
   isTimerOver() {
     return this._distance > 0;
   }
-
-  displayFormatedTimer() {
+  
+  //---------Méthode format et affichage du timer :
+  displayFormatedTimer(station) {
     // Calcul des minutes et secondes :
     const minutes = Math.floor((this._distance % (1000 * 60 * 60)) / (1000 * 60));
     const seconds = Math.floor((this._distance % (1000 * 60)) / 1000);
 
     // Affiche le timer :
-    if (!this.isTimerOver()) {
-      console.log('Timer is over');
+    //Quand le timer est en cours :
+    if (this.isTimerOver()) {
+     
+    messageNoBookingElt.style.display = "none";
+    messageValidBookingElt.textContent = "Vous avez réservé un vélo à la station " + sessionStorage.getItem("station") + ".";
+    countDownElt.textContent = "Votre réservation expirera dans " + minutes + " minutes et " + seconds + " seconde(s)";
+    
+    //Quand le timer est finit :
     } else {
-      console.log('Timer is not over yet');
-      return minutes + " minutes et " + seconds + " seconde(s)";
+     sessionStorage.clear();
+     clearInterval(this.initTimer());
+    countDownElt.textContent = "Votre réservation a expiré.";
+
+    setTimeout(function () {
+      countDownElt.textContent = "";
+      messageNoBookingElt.style.display = "block";
+      messageValidBookingElt.style.display = "none";
+    }, 3000);
     }
 
   }
+
+  //------------Méthode pour lancer le timer :
+  initTimer() {
+    var that = this;
+    setInterval(function(){
+      that.dicreaseTimer();
+    }, 1000);
+    
+  }
 }
 
-var validButtonElt = document.getElementById("valid_button");
-
-validButtonElt.addEventListener('click', function() {
-  var myDate = new Date();
-  var newTimer = new NewTimer(20, myDate, myDate);
-  setInterval(function() {
-    newTimer.dicreaseTimer();
-    countDownElt.textContent = "Votre réservation expirera dans " + newTimer.displayFormatedTimer();
-  }, 1000);
-});
 
 
 
@@ -89,7 +103,7 @@ function myTimer() {
     document.getElementById("count_down").textContent = "Votre réservation a expiré.";
     setTimeout(function () {
 
-      document.getElementById("count_down").textContent = "";
+      countDownElt.textContent = "none";
       messageNoBookingElt.style.display = "block";
       messageValidBookingElt.style.display = "none";
 

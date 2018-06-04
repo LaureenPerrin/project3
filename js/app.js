@@ -46,29 +46,16 @@ const clearButtonElt = document.getElementById("clear_button");
 const footerElt = document.querySelector("footer");
 
 //Déclaration de la div qui contient le compte à rebour :
-const containerCountDownElt = document.createElement("div");
-containerCountDownElt.id = "container_count_down";
-
-//Déclaration de l'élément qui affiche le compte à rebour :
-const countDownElt = document.createElement("p");
-countDownElt.id = "count_down";
+const containerCountDownElt = document.getElementById("container_count_down");
 
 //Déclaration de l'élément qui indique quand il n'y a pas de réservation :
-const messageNoBookingElt = document.createElement("p");
-messageNoBookingElt.id = "message_no_booking";
-messageNoBookingElt.textContent = "Aucune réservation.";
+const messageNoBookingElt = document.getElementById("message_no_booking");
 
 //Déclaration de l'élément qui indique quand il y a une réservation et dans quelle station :
-const messageValidBookingElt = document.createElement("p");
-messageValidBookingElt.id = "message_valid_booking";
+const messageValidBookingElt = document.getElementById("message_valid_booking");
 
-//Ajout des différents éléments cités au dessus dans l'élément containerCountDownElt :
-containerCountDownElt.appendChild(messageNoBookingElt);
-containerCountDownElt.appendChild(messageValidBookingElt);
-containerCountDownElt.appendChild(countDownElt);
-
-//Ajout de l'élément containerCountDownElt dans l'élément mainWrapperElt avant son élément enfant footerElt :
-mainWrapperElt.insertBefore(containerCountDownElt, footerElt);
+//Déclaration de l'élément qui affiche le compte à rebour :
+const countDownElt = document.getElementById("count_down");
 
 //Instanciation de l'objet createBooking avec la class Booking :
 const booking = new Booking();
@@ -82,7 +69,6 @@ var Slider = new NewSlider();
 
 //Appel de sa méthode init pour initialiser le slider :
 Slider.init();
-
 
 //_______________________________________________________________Appel AJAX:
 
@@ -119,41 +105,59 @@ function initMap(data) {
     //Boucle qui parcours les stations de Lyon afin d'ajouter un marqueur par station sur la googleMap ainsi que des events associés :
     data.forEach(function (station) {
 
-        //Appel de la méthode condition de l'objet station :
-        station.isAvailableBikes(station);
-
         //Intanciation de l'objet marker avec Le constructeur google.maps.Marker qui utilise un objet littéral Marker options unique qui spécifie les propriétés initiales du marqueur :
         const marker = new google.maps.Marker({
             //Position des marqueurs sur chaques stations de Lyon (intanciation de position avec la class LatLng :
             position: new google.maps.LatLng(station.position),
-            //Spécifie l'objet googlMap sur lequel positionner les marqueurs :
             map: googleMap,
             icon: station.setIconMarker(station)
         });
 
         //------------Ajout d'un event quand l'utilisateur click sur un marqueur :
-
         marker.addListener('click', function () {
 
             //Appel de la méthode divInfoStation(station) de l'objet station pour mettre en place et faire apparaitre la div "info_stations" :
             station.divInfoStation(station);
+            //--------Ajout de l'event quand l'utilisateur click sur le bouton réserver :
+            bookingButtonElt.addEventListener("click", function () {
+                
+                //Appel de la méthode booking de l'objet createBooking pour faire apparaitre le formulaire de réservation :
+                booking.initBooking();
+
+            });
 
             //---Ajout d'un event sur le bouton valider du formulaire :
             validButtonElt.addEventListener("click", function (e) {
-
+                
+                e.preventDefault();
+                //Supprime les données si déjà existantes :
                 booking.storeBookingWebCondition();
 
                 //Si l'utilisateur n'a pas remplit tous les champs alors une fenêtre apparaît avec le message suivant :
                 if (inputFirstNameElt.value == "" || inputLastNameElt.value == "" || Canvas.emptyCanvas()) {
-                    e.preventDefault();
-                    return alert("Veuillez remplir tous les champs s'il vous plaît !");
-
-                } else {
                     
+                    alert("Veuillez remplir tous les champs s'il vous plaît !");
+                } else {
+                    //Enregistre toutes les données voulue
                     booking.storeBookingWeb(station);
-                    //Démarrage du timer :
-                  
+                    station.isAvailableBikes(station);
+
+                    const myDate = new Date();
+                    const savedDate = sessionStorage.getItem('date');
+                    const newTimer = new NewTimer(1, savedDate, myDate);
+
+                    newTimer.initTimer(station);
+
+                    //Instanciation d'un objet user avec la class User :
+                    var UserCreated = new User(sessionStorage.getItem("nom"), sessionStorage.getItem("prénom"), sessionStorage.getItem("signature"));
+                    //Instanciation d'un objet validBooking avec la class Booking :
+                    var validBooking = new Booking(sessionStorage.getItem("booking_status"),sessionStorage.getItem("date"), UserCreated);
+                    //Insertion des validBooking créé dans le tableau validBookings :
+                    validBookings.push(validBooking);
+                    
                 }
+                formElt.style.display = "none";
+                infoStationsElt.style.display = "none";
             });
         });
         //Ajout des marqueurs dans le tableau markers :
@@ -165,38 +169,15 @@ function initMap(data) {
         imagePath: 'images/m',
     });
 
-    //Instanciation d'un objet user avec la class User :
-    var user = new User(sessionStorage.getItem("nom"), sessionStorage.getItem("prénom"), sessionStorage.getItem("signature"));
-
-    //Instanciation d'un objet validBooking avec la class Booking :
-    var validBooking = new Booking(true, sessionStorage.getItem("date"), user);
-    //Insertion des validBooking créé dans le tableau validBookings :
-    validBookings.push(validBooking);
-
     return googleMap;
 };
 
 //___________________________________________________Ajouts d'events :
 
-//--------Ajout de l'event quand l'utilisateur click sur le bouton réserver :
-bookingButtonElt.addEventListener("click", function () {
-    //Appel de la méthode booking de l'objet createBooking pour faire apparaitre le formulaire de réservation :
-    booking.initBooking();
-
-});
 
 //---------------Ajout d'un event sur le bouton effacer :
 clearButtonElt.addEventListener("click", function () {
     //Apple de la méthode clearDraw de l'objet createCanvas pour effacer la signature du canvas :
     Canvas.clearCanvas();
 });
-
-
-
-
-
-
-
-
-
 

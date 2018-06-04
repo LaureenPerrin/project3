@@ -2,8 +2,8 @@
 //---------------------class Booking  pour les réservation de vélo :
 
 class Booking {
-    constructor(date, User) {
-        this._status = true;
+    constructor(status, date, User) {
+        this._status = status;
         this._date = date;
         this._user = User;
     }
@@ -12,13 +12,16 @@ class Booking {
 
     validBookingStatus() {
 
-        return this._status;
+        return this._status = true;
     }
 
     //-----Méthode pour accéder à la réservation :
 
     initBooking() {
-
+        inputFirstNameElt.value = null;
+        inputLastNameElt.value = null;
+        Canvas.clearCanvas();
+        
         formElt.style.display = "block";
         //Appel de la méthode initCanvas de l'objet Canvas pour signer :
         Canvas.initCanvas();

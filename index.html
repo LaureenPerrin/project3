@@ -12,23 +12,26 @@
     <title>Vélo'v</title>
 
     <!--phrase donnée si url copiée sur les réseaux sociaux-->
-    <meta name="description" content="Grâce à notre application web Vélo'v vous pourrez vous déplacer dans la belle ville de Lyon en réservant un vélo en un clic !"/>
+    <meta name="description" content="Grâce à notre application web Vélo'v vous pourrez vous déplacer dans la belle ville de Lyon en réservant un vélo en un clic !"
+    />
 
     <!-- pour Facebook Open Graph data -->
-    <meta property="og:title" content="Vélo'v"/>
-    <meta property="og:type" content="website"/>
-    <meta property="og:url" content="http://www.project3.lperrindevweb.com/"/>
-    <meta property="og:image" content="images/velov_logo.png"/>
-    <meta property="og:description" content="Grâce à notre application web Vélo'v vous pourrez vous déplacer dans la belle ville de Lyon en réservant un vélo en un clic !"/>
+    <meta property="og:title" content="Vélo'v" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="http://www.project3.lperrindevweb.com/" />
+    <meta property="og:image" content="images/velov_logo.png" />
+    <meta property="og:description" content="Grâce à notre application web Vélo'v vous pourrez vous déplacer dans la belle ville de Lyon en réservant un vélo en un clic !"
+    />
 
     <!-- pour Twitter Card data -->
-    <meta name="twitter:card" content="summary"/>
-    <meta name="twitter:site" content="@project3.lperrindevweb.com"/>
-    <meta name="twitter:creator" content="@Vélo'v"/>
-    <meta property="og:url" content="http://www.project3.lperrindevweb.com/"/>
-    <meta property="og:title" content="Vélo'v"/>
-    <meta property="og:description" content="Grâce à notre application web Vélo'v vous pourrez vous déplacer dans la belle ville de Lyon en réservant un vélo en un clic !"/>
-    <meta property="og:image" content="images/velov_logo.png"/>
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="@project3.lperrindevweb.com" />
+    <meta name="twitter:creator" content="@Vélo'v" />
+    <meta property="og:url" content="http://www.project3.lperrindevweb.com/" />
+    <meta property="og:title" content="Vélo'v" />
+    <meta property="og:description" content="Grâce à notre application web Vélo'v vous pourrez vous déplacer dans la belle ville de Lyon en réservant un vélo en un clic !"
+    />
+    <meta property="og:image" content="images/velov_logo.png" />
 
     <!--lien mise en  forme css-->
     <link rel="stylesheet" type="text/css" href="css/reset.css" />
@@ -66,8 +69,7 @@
                         <img class="image" src="images/image_6.jpg" alt="Un vélo'v vue de profil avec descriptif de chaque partie du vélo" />
                     </li>
                     <li>
-                        <img class="image" src="images/image_7.jpg" alt="Vue de dos, une femme sur un vélo'v, le bras gauche levé pour tourné"
-                        />
+                        <img class="image" src="images/image_7.jpg" alt="Vue de dos, une femme sur un vélo'v, le bras gauche levé pour tourné" />
                     </li>
                     <li>
                         <img class="image" src="images/image_8.jpg" alt="Vue de dos, un homme sur un vélo'v qui va traversser un passage piéton"
@@ -119,7 +121,7 @@
             </label>
 
             <label id="last_name">Nom :
-                <input id="input_last_name" required="required" type="text">
+                <input id="input_last_name"required="required" type="text">
             </label>
 
             <p id="title_signature">Signature :</p>
@@ -129,7 +131,11 @@
             <input id="valid_button" value="Valider" type="submit">
             <input id="clear_button" value="Effacer" type="button">
         </form>
-        
+        <div id="container_count_down">
+            <p id="message_no_booking">Aucune réservation actuellement.</p>
+            <p id="message_valid_booking"></p>
+            <p id="count_down"></p>
+        </div>
         <footer>
             <p>2018 - Application web factice développée par Laureen Perrin pour l'établissement OpenClassRooms</p>
         </footer>
