@@ -21,7 +21,7 @@ class Booking {
         inputFirstNameElt.value = null;
         inputLastNameElt.value = null;
         Canvas.clearCanvas();
-        
+
         formElt.style.display = "block";
         //Appel de la méthode initCanvas de l'objet Canvas pour signer :
         Canvas.initCanvas();
@@ -30,7 +30,7 @@ class Booking {
 
     //-----Méthode pour supprimer es données existantes si déjà il y a déjà des données d'enregistrées :
 
-    storeBookingWebCondition() {
+    storeBookingWebCondition(station) {
 
         //Si il y à déjà des données enregistrées dans sessionStorage :
         if (sessionStorage.lenght >= 1) {

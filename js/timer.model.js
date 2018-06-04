@@ -38,7 +38,6 @@ class NewTimer {
     
     //Quand le timer est finit :
     } else {
-     sessionStorage.clear();
      clearInterval(this.initTimer());
     countDownElt.textContent = "Votre réservation a expiré.";
 

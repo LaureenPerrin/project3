@@ -104,7 +104,7 @@ function initMap(data) {
 
     //Boucle qui parcours les stations de Lyon afin d'ajouter un marqueur par station sur la googleMap ainsi que des events associés :
     data.forEach(function (station) {
-
+        
         //Intanciation de l'objet marker avec Le constructeur google.maps.Marker qui utilise un objet littéral Marker options unique qui spécifie les propriétés initiales du marqueur :
         const marker = new google.maps.Marker({
             //Position des marqueurs sur chaques stations de Lyon (intanciation de position avec la class LatLng :
@@ -112,33 +112,25 @@ function initMap(data) {
             map: googleMap,
             icon: station.setIconMarker(station)
         });
-
+        
         //------------Ajout d'un event quand l'utilisateur click sur un marqueur :
         marker.addListener('click', function () {
-
+            
             //Appel de la méthode divInfoStation(station) de l'objet station pour mettre en place et faire apparaitre la div "info_stations" :
             station.divInfoStation(station);
-            //--------Ajout de l'event quand l'utilisateur click sur le bouton réserver :
-            bookingButtonElt.addEventListener("click", function () {
-                
-                //Appel de la méthode booking de l'objet createBooking pour faire apparaitre le formulaire de réservation :
-                booking.initBooking();
-
-            });
 
             //---Ajout d'un event sur le bouton valider du formulaire :
             validButtonElt.addEventListener("click", function (e) {
                 
                 e.preventDefault();
                 //Supprime les données si déjà existantes :
-                booking.storeBookingWebCondition();
+                booking.storeBookingWebCondition(station);
 
                 //Si l'utilisateur n'a pas remplit tous les champs alors une fenêtre apparaît avec le message suivant :
                 if (inputFirstNameElt.value == "" || inputLastNameElt.value == "" || Canvas.emptyCanvas()) {
-                    
                     alert("Veuillez remplir tous les champs s'il vous plaît !");
                 } else {
-                    //Enregistre toutes les données voulue
+                    //Enregistre toutes les données :
                     booking.storeBookingWeb(station);
                     station.isAvailableBikes(station);
 
@@ -147,7 +139,7 @@ function initMap(data) {
                     const newTimer = new NewTimer(1, savedDate, myDate);
 
                     newTimer.initTimer(station);
-
+                    
                     //Instanciation d'un objet user avec la class User :
                     var UserCreated = new User(sessionStorage.getItem("nom"), sessionStorage.getItem("prénom"), sessionStorage.getItem("signature"));
                     //Instanciation d'un objet validBooking avec la class Booking :
@@ -163,7 +155,6 @@ function initMap(data) {
         //Ajout des marqueurs dans le tableau markers :
         markers.push(marker);
     });
-
     //Intanciation de l'objet markerCluster avec la class MarkerClusterer pour le regroupement des marqeurs :
     const markerCluster = new MarkerClusterer(googleMap, markers, {
         imagePath: 'images/m',
@@ -174,6 +165,13 @@ function initMap(data) {
 
 //___________________________________________________Ajouts d'events :
 
+//--------Ajout de l'event quand l'utilisateur click sur le bouton réserver :
+bookingButtonElt.addEventListener("click", function () {
+                
+    //Appel de la méthode booking de l'objet createBooking pour faire apparaitre le formulaire de réservation :
+    booking.initBooking();
+
+});
 
 //---------------Ajout d'un event sur le bouton effacer :
 clearButtonElt.addEventListener("click", function () {
