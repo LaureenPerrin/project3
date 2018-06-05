@@ -33,7 +33,7 @@ class Booking {
     storeBookingWebCondition() {
 
         //Si il y à déjà des données enregistrées dans sessionStorage :
-        if (sessionStorage.lenght >= 1) {
+        if (sessionStorage.lenght !== null) {
             //Alors on les supprime :
             sessionStorage.clear();
         }

@@ -31,10 +31,11 @@ class NewTimer {
     // Affiche le timer :
     //Quand le timer est en cours :
     if (this.isTimerOver()) {
-
+      
+       if (sessionStorage.getItem("station") === station.name){
       messageNoBookingElt.style.display = "none";
       countDownElt.textContent = "Vous avez réservé un vélo à la station " + sessionStorage.getItem("station") + " pour " + minutes + " minutes et " + seconds + " seconde(s)";
-
+      }
       //Quand le timer est finit :
     } else {
       sessionStorage.clear();
@@ -50,13 +51,14 @@ class NewTimer {
   }
 
   //------------Méthode pour lancer le timer :
-  initTimer() {
+  initTimer(station) {
     var that = this;
     setInterval(function () {
-      that.dicreaseTimer();
+      that.dicreaseTimer(station);
     }, 1000);
 
   }
+
 }
 
 

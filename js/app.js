@@ -109,23 +109,24 @@ function initMap(data) {
 
         //------------Ajout d'un event quand l'utilisateur click sur un marqueur :
         marker.addListener('click', function () {
-            station.isAvailableBikes(station);
+          
             //Appel de la méthode divInfoStation(station) de l'objet station pour mettre en place et faire apparaitre la div "info_stations" :
             station.divInfoStation(station);
-
+            
             //---Ajout d'un event sur le bouton valider du formulaire :
-            validButtonElt.addEventListener("click", function (e) {
-
-                e.preventDefault();
+            validButtonElt.addEventListener("click", function () {
+                station.isAvailableBikes(station);
                 //Supprime les données si déjà existantes :
                 booking.storeBookingWebCondition();
-
+                
                 //Si l'utilisateur n'a pas remplit tous les champs alors une fenêtre apparaît avec le message suivant :
                 if (inputFirstNameElt.value == "" || inputLastNameElt.value == "" || Canvas.emptyCanvas()) {
                     alert("Veuillez remplir tous les champs s'il vous plaît !");
                 } else {
+                
                     //Enregistre toutes les données :
                     booking.storeBookingWeb(station);
+                    station.isAvailableBikes(station);
 
                     const myDate = new Date();
                     const savedDate = sessionStorage.getItem('date');

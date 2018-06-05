@@ -74,14 +74,19 @@ class Station {
 
     isAvailableBikes(station) {
 
-        if (station.name === sessionStorage.getItem("station")) {
-            if (station.availableBikes >= 1) {
-                station.availableBikes -= 1;
+        if (station.name === sessionStorage.getItem("station") && (station.availableBikes >= 1)) {
+                station.availableBikes --;
             }
 
-        } else if (station.name !== sessionStorage.getItem("station")) {
-            station.availableBikes += 1;
-        }
+            /* else if (station.name !== sessionStorage.getItem("station")) {
+                station.availableBikes += 1;
+            }*/
+
     }
 
+    isStopAvailableBikes(station){
+        if (station.name !== sessionStorage.getItem("station")) {
+            station.availableBikes++;
+        }
+    }
 }
