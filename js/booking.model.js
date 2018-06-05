@@ -1,7 +1,7 @@
 
 //---------------------class Booking  pour les réservation de vélo :
 
-class Booking {
+class newBooking {
     constructor(status, date, User) {
         this._status = status;
         this._date = date;

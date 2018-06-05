@@ -77,15 +77,10 @@ class Station {
         if (station.name === sessionStorage.getItem("station") && (station.availableBikes >= 1)) {
             station.availableBikes--;
         }
-        else if (station.name !== sessionStorage.getItem("station")) {
+        else if (station.name !== sessionStorage.getItem("station") && (station.availableBikes >= 1)) {
             station.availableBikes++;
         }
 
     }
 
-    /*isStopAvailableBikes(station){
-        if (station.name !== sessionStorage.getItem("station")) {
-            station.availableBikes++;
-        }
-    }*/
 }

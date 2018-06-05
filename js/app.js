@@ -55,7 +55,7 @@ const messageNoBookingElt = document.getElementById("message_no_booking");
 const countDownElt = document.getElementById("count_down");
 
 //Instanciation de l'objet createBooking avec la class Booking :
-const booking = new Booking();
+const Booking = new newBooking();
 
 //Déclaration du canvas et instanciation de l'objet Canvas :
 var newCanvas = document.getElementById('canvas');
@@ -105,7 +105,6 @@ function initMap(data) {
             map: googleMap,
             icon: station.setIconMarker(station)
         });
-
         //------------Ajout d'un event quand l'utilisateur click sur un marqueur :
         marker.addListener('click', function () {
             station.isAvailableBikes(station);
@@ -117,26 +116,26 @@ function initMap(data) {
             validButtonElt.addEventListener("click", function () {
 
                 //Supprime les données si déjà existantes :
-                booking.storeBookingWebCondition(station);
+                Booking.storeBookingWebCondition(station);
 
                 //Si l'utilisateur n'a pas remplit tous les champs alors une fenêtre apparaît avec le message suivant :
                 if (inputFirstNameElt.value == "" || inputLastNameElt.value == "" || Canvas.emptyCanvas()) {
                     alert("Veuillez remplir tous les champs s'il vous plaît !");
                 } else {
-
+                    
                     //Enregistre toutes les données :
-                    booking.storeBookingWeb(station);
+                    Booking.storeBookingWeb(station);
 
                     const myDate = new Date();
                     const savedDate = sessionStorage.getItem('date');
-                    const newTimer = new NewTimer(1, savedDate, myDate);
-
+                    const newTimer = new NewTimer(20, savedDate, myDate);
+                
                     newTimer.initTimer(station);
 
                     //Instanciation d'un objet user avec la class User :
                     var UserCreated = new User(sessionStorage.getItem("nom"), sessionStorage.getItem("prénom"), sessionStorage.getItem("signature"));
                     //Instanciation d'un objet validBooking avec la class Booking :
-                    var validBooking = new Booking(sessionStorage.getItem("booking_status"), sessionStorage.getItem("date"), UserCreated);
+                    var validBooking = new newBooking(sessionStorage.getItem("booking_status"), sessionStorage.getItem("date"), UserCreated);
                     //Insertion des validBooking créé dans le tableau validBookings :
                     validBookings.push(validBooking);
 
@@ -161,8 +160,7 @@ function initMap(data) {
 //--------Ajout de l'event quand l'utilisateur click sur le bouton réserver :
 bookingButtonElt.addEventListener("click", function () {
     //Appel de la méthode booking de l'objet createBooking pour faire apparaitre le formulaire de réservation :
-    booking.initBooking();
-
+    Booking.initBooking();
 });
 
 //---------------Ajout d'un event sur le bouton effacer :
