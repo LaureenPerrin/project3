@@ -30,12 +30,13 @@ class Booking {
 
     //-----Méthode pour supprimer es données existantes si déjà il y a déjà des données d'enregistrées :
 
-    storeBookingWebCondition() {
+    storeBookingWebCondition(station) {
 
         //Si il y à déjà des données enregistrées dans sessionStorage :
         if (sessionStorage.lenght !== null) {
             //Alors on les supprime :
             sessionStorage.clear();
+
         }
     }
 

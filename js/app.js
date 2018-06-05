@@ -98,7 +98,6 @@ function initMap(data) {
 
     //Boucle qui parcours les stations de Lyon afin d'ajouter un marqueur par station sur la googleMap ainsi que des events associés :
     data.forEach(function (station) {
-
         //Intanciation de l'objet marker avec Le constructeur google.maps.Marker qui utilise un objet littéral Marker options unique qui spécifie les propriétés initiales du marqueur :
         const marker = new google.maps.Marker({
             //Position des marqueurs sur chaques stations de Lyon (intanciation de position avec la class LatLng :
@@ -109,24 +108,24 @@ function initMap(data) {
 
         //------------Ajout d'un event quand l'utilisateur click sur un marqueur :
         marker.addListener('click', function () {
-          
+            station.isAvailableBikes(station);
+
             //Appel de la méthode divInfoStation(station) de l'objet station pour mettre en place et faire apparaitre la div "info_stations" :
             station.divInfoStation(station);
-            
+
             //---Ajout d'un event sur le bouton valider du formulaire :
             validButtonElt.addEventListener("click", function () {
-                station.isAvailableBikes(station);
+
                 //Supprime les données si déjà existantes :
-                booking.storeBookingWebCondition();
-                
+                booking.storeBookingWebCondition(station);
+
                 //Si l'utilisateur n'a pas remplit tous les champs alors une fenêtre apparaît avec le message suivant :
                 if (inputFirstNameElt.value == "" || inputLastNameElt.value == "" || Canvas.emptyCanvas()) {
                     alert("Veuillez remplir tous les champs s'il vous plaît !");
                 } else {
-                
+
                     //Enregistre toutes les données :
                     booking.storeBookingWeb(station);
-                    station.isAvailableBikes(station);
 
                     const myDate = new Date();
                     const savedDate = sessionStorage.getItem('date');

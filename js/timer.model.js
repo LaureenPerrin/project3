@@ -38,6 +38,7 @@ class NewTimer {
       }
       //Quand le timer est finit :
     } else {
+      
       sessionStorage.clear();
       clearInterval(this.initTimer());
       countDownElt.textContent = "Votre réservation a expiré.";
@@ -53,10 +54,11 @@ class NewTimer {
   //------------Méthode pour lancer le timer :
   initTimer(station) {
     var that = this;
+    
     setInterval(function () {
       that.dicreaseTimer(station);
     }, 1000);
-
+      
   }
 
 }
