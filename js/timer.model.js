@@ -8,7 +8,7 @@ class NewTimer {
     this._countDownDate = new Date((Date.parse(this._storageBookingDate)) + this._timeInMinutes * 60 * 1001);
     this._distance = this._countDownDate - this._now;
   }
-  
+
   //--------Méthode pour décrémenter le timer + affichage :
   dicreaseTimer(station) {
     if (this.isTimerOver()) {
@@ -21,7 +21,7 @@ class NewTimer {
   isTimerOver() {
     return this._distance > 0;
   }
-  
+
   //---------Méthode format et affichage du timer :
   displayFormatedTimer(station) {
     // Calcul des minutes et secondes :
@@ -31,21 +31,20 @@ class NewTimer {
     // Affiche le timer :
     //Quand le timer est en cours :
     if (this.isTimerOver()) {
-     
-    messageNoBookingElt.style.display = "none";
-    messageValidBookingElt.textContent = "Vous avez réservé un vélo à la station " + sessionStorage.getItem("station") + ".";
-    countDownElt.textContent = "Votre réservation expirera dans " + minutes + " minutes et " + seconds + " seconde(s)";
-    
-    //Quand le timer est finit :
-    } else {
-     clearInterval(this.initTimer());
-    countDownElt.textContent = "Votre réservation a expiré.";
 
-    setTimeout(function () {
-      countDownElt.textContent = "";
-      messageNoBookingElt.style.display = "block";
-      messageValidBookingElt.style.display = "none";
-    }, 3000);
+      messageNoBookingElt.style.display = "none";
+      countDownElt.textContent = "Vous avez réservé un vélo à la station " + sessionStorage.getItem("station") + " pour " + minutes + " minutes et " + seconds + " seconde(s)";
+
+      //Quand le timer est finit :
+    } else {
+      sessionStorage.clear();
+      clearInterval(this.initTimer());
+      countDownElt.textContent = "Votre réservation a expiré.";
+
+      setTimeout(function () {
+        countDownElt.textContent = "";
+        messageNoBookingElt.style.display = "block";
+      }, 3000);
     }
 
   }
@@ -53,15 +52,12 @@ class NewTimer {
   //------------Méthode pour lancer le timer :
   initTimer() {
     var that = this;
-    setInterval(function(){
+    setInterval(function () {
       that.dicreaseTimer();
     }, 1000);
-    
+
   }
 }
-
-
-
 
 
 /*
